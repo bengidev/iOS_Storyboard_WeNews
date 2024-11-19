@@ -18,12 +18,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        let viewController = UIViewController()
-        viewController.view.backgroundColor = .systemOrange
-
-        self.window = UIWindow(frame: UIScreen.main.bounds)
-        self.window?.makeKeyAndVisible()
-        self.window?.rootViewController = viewController
+        let appCoordinator: AppCoordinator = .init(window: self.window ?? .init())
+        appCoordinator.start()
 
         return true
     }
