@@ -33,19 +33,21 @@ class AppCoordinator: BaseCoordinator {
             .instance
             .getHaveAccessOnboarding()
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { result in
-                let coordinator: BaseCoordinator
+            .subscribe { event in
+                if case let .success(result) = event {
+                    let coordinator: BaseCoordinator
 
-                // Here you could check if user is signed in and show appropriate screen
-                if result {
-                    coordinator = HomeCoordinator.intance
-                } else {
-                    coordinator = OnboardingCoordinator.intance
+                    // Here you could check if user is signed in and show appropriate screen
+                    if result {
+                        coordinator = HomeCoordinator.intance
+                    } else {
+                        coordinator = OnboardingCoordinator.intance
+                    }
+
+                    coordinator.navigationController = self.navigationController
+                    self.start(coordinator: coordinator)
                 }
-
-                coordinator.navigationController = self.navigationController
-                self.start(coordinator: coordinator)
-            })
+            }
             .disposed(by: self.disposeBag)
     }
 }
