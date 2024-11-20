@@ -10,7 +10,7 @@ import UIKit
 
 extension UILabel {
     func loadAppTitleLabelStyle() {
-        guard let customFont = UIFont(name: "Georgia", size: Device.current.diagonal * 6) else { return }
+        guard let customFont = UIFont(name: "Georgia", size: Device.current.diagonal * 6.5) else { return }
         let fontMetrics = UIFontMetrics(forTextStyle: .largeTitle)
         self.font = fontMetrics.scaledFont(for: customFont)
         self.adjustsFontForContentSizeCategory = true
