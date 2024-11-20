@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina4_7" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -12,7 +13,7 @@
         <!--Onboarding View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
-                <viewController storyboardIdentifier="OnboardingViewController" id="Y6W-OH-hqX" customClass="OnboardingViewController" customModule="OuRecipes" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnboardingViewController" id="Y6W-OH-hqX" customClass="OnboardingViewController" customModule="WeNews" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -21,7 +22,7 @@
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vru-aq-cB2">
-                                <rect key="frame" x="0.0" y="40" width="375" height="129.5"/>
+                                <rect key="frame" x="0.0" y="404" width="375" height="129.5"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="nfZ-yT-qua">
                                         <rect key="frame" x="0.0" y="0.0" width="4" height="129.5"/>
@@ -29,19 +30,19 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Vh8-Yj-stj">
                                         <rect key="frame" x="4" y="0.0" width="367.5" height="129.5"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Cooking" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFw-UW-Qf7">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Discover" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xFw-UW-Qf7">
                                                 <rect key="frame" x="0.0" y="0.0" width="367.5" height="41"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle0"/>
-                                                <color key="textColor" name="BlackTextColor"/>
+                                                <color key="textColor" name="WhiteTextColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Delicious" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2G-OQ-bi3">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Breaking" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Y2G-OQ-bi3">
                                                 <rect key="frame" x="0.0" y="41" width="367.5" height="33.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <color key="textColor" systemColor="systemGrayColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Like a Chef" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxU-RV-AOt">
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="News" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="zxU-RV-AOt">
                                                 <rect key="frame" x="0.0" y="74.5" width="367.5" height="33.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                                 <color key="textColor" systemColor="systemGrayColor"/>
@@ -64,7 +65,7 @@
                                 <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
                                 <state key="normal" title="Get Started"/>
                             </button>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="This recipe app offers a wide selection of diverse and easy recipes suitable for all cooking levels!" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BzC-iT-kaG">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Makes it easy for you to access the latest and most recent news quickly and easily from a single platform" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BzC-iT-kaG">
                                 <rect key="frame" x="10" y="538" width="355" height="34"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -77,7 +78,6 @@
                             <constraint firstItem="nfZ-yT-qua" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.01" id="0wX-Z4-Dd7"/>
                             <constraint firstItem="kbm-oh-oCQ" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.85" id="1TF-Wk-LbL"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="vru-aq-cB2" secondAttribute="trailing" id="7uC-oj-rjG"/>
-                            <constraint firstItem="vru-aq-cB2" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" multiplier="2" id="A9S-i8-b9S"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="5WC-Ry-5ee" secondAttribute="trailing" id="ARr-Cv-82k"/>
                             <constraint firstItem="kbm-oh-oCQ" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.07" id="DU0-r3-EwG"/>
                             <constraint firstItem="BzC-iT-kaG" firstAttribute="trailing" secondItem="vDu-zF-Fre" secondAttribute="trailing" constant="-10" id="DhW-Wk-FjE"/>
@@ -88,6 +88,7 @@
                             <constraint firstItem="5WC-Ry-5ee" firstAttribute="bottom" secondItem="5EZ-qb-Rvc" secondAttribute="bottom" id="LFz-Ab-yTo"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="leading" secondItem="BzC-iT-kaG" secondAttribute="leading" constant="-10" id="ZeM-O6-pwd"/>
                             <constraint firstItem="vru-aq-cB2" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.2" id="a6q-Id-ftm"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="vru-aq-cB2" secondAttribute="bottom" multiplier="1.25" id="aAg-eU-gzu"/>
                             <constraint firstItem="SG1-7S-X2H" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.01" id="dfv-iB-BRc"/>
                             <constraint firstItem="vru-aq-cB2" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="k5g-h1-cJP"/>
                             <constraint firstItem="kbm-oh-oCQ" firstAttribute="centerX" secondItem="vDu-zF-Fre" secondAttribute="centerX" id="roR-a6-top"/>
@@ -112,14 +113,14 @@
         <namedColor name="BackgroundColor">
             <color red="0.96078431372549022" green="0.94117647058823528" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
-        <namedColor name="BlackTextColor">
-            <color red="0.015686274509803921" green="0.050980392156862744" blue="0.070588235294117646" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        <namedColor name="WhiteTextColor">
+            <color red="0.96078431372549022" green="0.94117647058823528" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
         <systemColor name="systemGrayColor">
-            <color red="0.55686274509803924" green="0.55686274509803924" blue="0.57647058823529407" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+            <color red="0.5568627451" green="0.5568627451" blue="0.57647058819999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
