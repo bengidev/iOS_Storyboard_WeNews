@@ -16,10 +16,11 @@ class HomeViewModel {
 
     // MARK: Properties
 
-    let tastyFeed: BehaviorSubject<Swift.Result<Tasty, (any Error)>> = .init(value: .failure(NSError(domain: "", code: 1)))
+    let currentNews = BehaviorSubject<CurrentNews>(value: .empty)
 
     private let disposeBag = DisposeBag()
-    private let tastyAPI = TastyAPISource.instance
+    private let coordinator = HomeCoordinator.intance
+    private let apiSource = CurrentsAPISource.instance
 
     // MARK: Lifecycle
 
@@ -27,20 +28,55 @@ class HomeViewModel {
 
     // MARK: Functions
 
-    func requestTastyFeed() {
-        self.tastyAPI.getFoodFeeds()
+    func requestLatestNews() {
+        self.apiSource.sendGetLatestNews()
             .observe(on: MainScheduler.instance)
-            .subscribe { event in
-                switch event {
-                case let .success(tasty):
-                    self.tastyFeed.onNext(.success(tasty))
-                    dump(tasty, name: "requestTastyFeed")
-
-                case let .failure(error):
-                    self.tastyFeed.onNext(.failure(error))
-                    dump(error, name: "requestTastyFeed")
-                }
-            }
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                self.currentNews.on(.next(result))
+            }, onError: { error in
+                self.currentNews.on(.error(error))
+            })
             .disposed(by: self.disposeBag)
+    }
+
+    func requestSearchNews(withKeywords keywords: String) {
+        self.apiSource.sendGetSearchNews(withKeywords: keywords)
+            .observe(on: MainScheduler.instance)
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                self.currentNews.on(.next(result))
+            }, onError: { error in
+                self.currentNews.on(.error(error))
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    func requestSearchNews(withCategory category: CategoryNews) {
+        self.apiSource.sendGetSearchNews(withCategory: category)
+            .observe(on: MainScheduler.instance)
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                self.currentNews.on(.next(result))
+            }, onError: { error in
+                self.currentNews.on(.error(error))
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    func requestSearchNews(withCountry country: RegionNews) {
+        self.apiSource.sendGetSearchNews(withCountry: country)
+            .observe(on: MainScheduler.instance)
+            .subscribe(on: MainScheduler.instance)
+            .subscribe(onNext: { result in
+                self.currentNews.on(.next(result))
+            }, onError: { error in
+                self.currentNews.on(.error(error))
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    func navigateToHomeSearchScreen() {
+        self.coordinator.navigateToHomeSearchScreen()
     }
 }
