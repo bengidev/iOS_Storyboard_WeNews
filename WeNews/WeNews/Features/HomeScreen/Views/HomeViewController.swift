@@ -5,9 +5,12 @@
 //  Created by ENB Mac Mini M1 on 15/11/24.
 //
 
+import DeviceKit
 import RxCocoa
 import RxSwift
 import UIKit
+
+// MARK: - HomeViewController
 
 class HomeViewController: UIViewController, AppStoryboard {
     // MARK: Static Properties
@@ -20,7 +23,10 @@ class HomeViewController: UIViewController, AppStoryboard {
     private let disposeBag = DisposeBag()
     private let viewModel = HomeViewModel.instance
 
-    @IBOutlet private var button: UIButton!
+    @IBOutlet private var greetingHeaderLabel: UILabel!
+    @IBOutlet private var greetingFooterLabel: UILabel!
+    @IBOutlet private var greetingIconImage: UIImageView!
+    @IBOutlet private var searchBar: UISearchBar!
 
     // MARK: Lifecycle
 
@@ -54,6 +60,8 @@ class HomeViewController: UIViewController, AppStoryboard {
     ///
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        self.buildFeatureStyles()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -101,13 +109,75 @@ class HomeViewController: UIViewController, AppStoryboard {
     // MARK: Functions
 
     private func buildControllerBindings() {
-        self.button.rx.tap
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] tap in
-                guard let self else { return }
+//        self.button.rx.tap
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] _ in
+//                guard let self else { return }
+//
+//                self.viewModel.requestSearchNews(withCountry: .asia)
+//            })
+//            .disposed(by: self.disposeBag)
+//
+//        self.viewModel.currentNews
+//            .skip(while: { $0.status.isEmpty })
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(on: MainScheduler.instance)
+//            .subscribe(onNext: { result in
+//                dump(result, name: "buildControllerBindings")
+//            }, onError: { error in
+//                dump(error.localizedDescription, name: "buildControllerBindings")
+//            })
+//            .disposed(by: self.disposeBag)
+    }
 
-                self.viewModel.requestTastyFeed()
-            })
-            .disposed(by: self.disposeBag)
+    private func buildFeatureStyles() {
+        self.buildNavigationStyles()
+        self.buildHeaderGreetingLabelStyle()
+        self.buildFooterGreetingLabelStyle()
+        self.buildGreetingIconImageStyle()
+        self.buildSearchBarStyle()
+    }
+
+    private func buildNavigationStyles() {
+        self.navigationController?.navigationBar.isHidden = true
+    }
+
+    private func buildHeaderGreetingLabelStyle() {
+        self.greetingHeaderLabel.buildAppLabelStyle(
+            withSize: Device.current.diagonal * 2.5,
+            withTextStyle: .footnote,
+            withWeightStyle: .heavy
+        )
+    }
+
+    private func buildFooterGreetingLabelStyle() {
+        self.greetingFooterLabel.buildAppLabelStyle(
+            withFontName: "Georgia",
+            withSize: Device.current.diagonal * 4.5,
+            withTextStyle: .largeTitle
+        )
+    }
+
+    private func buildGreetingIconImageStyle() {
+        self.greetingIconImage.roundCorners(.allCorners, radius: 10.0)
+    }
+
+    private func buildSearchBarStyle() {
+        self.searchBar.delegate = self
+    }
+
+    @objc private func handleSearchBarTapGesture(_ sender: UITapGestureRecognizer) {
+        dump(sender, name: "handleSearchBarTapGesture")
+    }
+}
+
+// MARK: UISearchBarDelegate
+
+extension HomeViewController: UISearchBarDelegate {
+    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+        dump(searchBar, name: "searchBarShouldBeginEditing")
+
+        self.viewModel.navigateToHomeSearchScreen()
+        return false
     }
 }
