@@ -5,6 +5,7 @@
 //  Created by ENB Mac Mini M1 on 08/11/24.
 //
 
+import DeviceKit
 import RxCocoa
 import RxSwift
 import UIKit
@@ -45,7 +46,7 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.loadControllerStyles()
+        self.buildFeatureStyles()
         self.buildControllerBindings()
     }
 
@@ -103,7 +104,7 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
 
     // MARK: Functions
 
-    private func loadControllerStyles() {
+    private func buildFeatureStyles() {
         self.buildHeaderLabelStyle()
         self.buildFooterLabelStyle()
         self.buildGetStartedButtonStyle()
@@ -111,12 +112,19 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
 
     private func buildHeaderLabelStyle() {
         for label in self.headerLabels {
-            label.loadAppTitleLabelStyle()
+            label.buildAppLabelStyle(
+                withFontName: "Georgia",
+                withSize: Device.current.diagonal * 6.5,
+                withTextStyle: .largeTitle
+            )
         }
     }
 
     private func buildFooterLabelStyle() {
-        self.footerLabel.loadAppFootnoteLabelStyle()
+        self.footerLabel.buildAppLabelStyle(
+            withSize: Device.current.diagonal * 2.5,
+            withTextStyle: .footnote
+        )
     }
 
     private func buildGetStartedButtonStyle() {
