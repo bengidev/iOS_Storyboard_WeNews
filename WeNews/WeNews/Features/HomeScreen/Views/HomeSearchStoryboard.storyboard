@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="32700.99.1234" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pFc-2w-2vL">
+    <device id="retina6_12" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="22685"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Search News-->
+        <scene sceneID="s0d-6b-0kx">
+            <objects>
+                <viewController storyboardIdentifier="HomeSearchViewController" id="Y6W-OH-hqX" customClass="HomeSearchViewController" customModule="WeNews" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="5EZ-qb-Rvc">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search your news" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iQC-ur-VWq">
+                                <rect key="frame" x="0.0" y="155" width="393" height="56"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="yes" smartDashesType="yes" smartInsertDeleteType="yes"/>
+                                <connections>
+                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="P0Q-FL-xIy"/>
+                                </connections>
+                            </searchBar>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" keyboardDismissMode="interactive" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" estimatedSectionHeaderHeight="-1" sectionFooterHeight="28" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="U6A-hD-Ra9">
+                                <rect key="frame" x="0.0" y="211" width="393" height="607"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeSearchTableViewCell" rowHeight="100" id="6fC-YW-Lb1" customClass="HomeSearchTableViewCell" customModule="WeNews" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="50" width="393" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="6fC-YW-Lb1" id="gTL-Fb-HIQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="393" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Y6D-Rn-FRr">
+                                                    <rect key="frame" x="5" y="10" width="383" height="80"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="AvatarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="xc0-BI-HSN">
+                                                            <rect key="frame" x="0.0" y="0.0" width="78.666666666666671" height="80"/>
+                                                        </imageView>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="qeu-TG-MQf">
+                                                            <rect key="frame" x="78.666666666666671" y="0.0" width="11.666666666666671" height="80"/>
+                                                        </imageView>
+                                                        <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="10" translatesAutoresizingMaskIntoConstraints="NO" id="y3I-8J-j7G">
+                                                            <rect key="frame" x="90.333333333333343" y="0.0" width="292.66666666666663" height="80"/>
+                                                            <subviews>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Apple debuts The Weeknd: Open Hearts, the first-of-its-kind immersive music experience for Apple Vision Pro" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xs0-VP-Fkn">
+                                                                    <rect key="frame" x="0.0" y="0.0" width="292.66666666666669" height="42.333333333333336"/>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
+                                                                    <nil key="textColor"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="okP-an-jgH">
+                                                                    <rect key="frame" x="0.0" y="52.333333333333336" width="292.66666666666669" height="27.666666666666664"/>
+                                                                    <string key="text">Today, Apple released The Weeknd: Open Hearts, a breathtaking immersive music experience from the seven-time diamond-certified artist, available exclusively on Apple Vision Pro for a limited time.</string>
+                                                                    <fontDescription key="fontDescription" style="UICTFontTextStyleFootnote"/>
+                                                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                    <nil key="highlightedColor"/>
+                                                                </label>
+                                                            </subviews>
+                                                        </stackView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="xc0-BI-HSN" firstAttribute="width" secondItem="gTL-Fb-HIQ" secondAttribute="width" multiplier="0.2" id="ApH-vQ-H8R"/>
+                                                <constraint firstItem="Y6D-Rn-FRr" firstAttribute="leading" secondItem="gTL-Fb-HIQ" secondAttribute="leading" constant="5" id="GaS-yc-jkB"/>
+                                                <constraint firstAttribute="bottom" secondItem="Y6D-Rn-FRr" secondAttribute="bottom" constant="10" id="Ken-pW-G6i"/>
+                                                <constraint firstItem="qeu-TG-MQf" firstAttribute="width" secondItem="gTL-Fb-HIQ" secondAttribute="width" multiplier="0.03" id="an3-zW-Zp1"/>
+                                                <constraint firstItem="Y6D-Rn-FRr" firstAttribute="top" secondItem="gTL-Fb-HIQ" secondAttribute="top" constant="10" id="e7P-i2-Sgc"/>
+                                                <constraint firstAttribute="trailing" secondItem="Y6D-Rn-FRr" secondAttribute="trailing" constant="5" id="shv-vq-9Q5"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="newsBodyLabel" destination="okP-an-jgH" id="YF6-Mk-bCD"/>
+                                            <outlet property="newsIconImage" destination="xc0-BI-HSN" id="2kE-vP-Dg3"/>
+                                            <outlet property="newsTitleLabel" destination="Xs0-VP-Fkn" id="GD0-SP-im8"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
+                        <color key="backgroundColor" name="BackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="iQC-ur-VWq" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="1u0-7E-y8E"/>
+                            <constraint firstItem="U6A-hD-Ra9" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="6FA-U9-md8"/>
+                            <constraint firstItem="iQC-ur-VWq" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="CBR-Dr-FfJ"/>
+                            <constraint firstItem="U6A-hD-Ra9" firstAttribute="top" secondItem="iQC-ur-VWq" secondAttribute="bottom" id="MBB-10-NJE"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="bottom" secondItem="U6A-hD-Ra9" secondAttribute="bottom" id="R4y-NX-PZ8"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="iQC-ur-VWq" secondAttribute="trailing" id="jIT-Dd-Yd4"/>
+                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="U6A-hD-Ra9" secondAttribute="trailing" id="wvq-j8-aan"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Search News" largeTitleDisplayMode="always" id="dk5-lq-Vs2"/>
+                    <connections>
+                        <outlet property="tableView" destination="U6A-hD-Ra9" id="m7o-iA-H3e"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1055.7251908396945" y="-34.507042253521128"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="xzY-B8-Stt">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="pFc-2w-2vL" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="BlK-Nl-dtv">
+                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Y6W-OH-hqX" kind="relationship" relationship="rootViewController" id="AEe-XZ-4Ri"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="GeG-dn-yjm" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="130.53435114503816" y="-34.507042253521128"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="AvatarIcon" width="1920" height="1920"/>
+        <namedColor name="BackgroundColor">
+            <color red="0.96078431372549022" green="0.94117647058823528" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>
