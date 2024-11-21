@@ -32,4 +32,13 @@ class HomeCoordinator: BaseCoordinator {
     }
 
     // MARK: Functions
+
+    func navigateToHomeSearchScreen() {
+        let coordinator = HomeSearchCoordinator.intance
+        coordinator.navigationController = self.navigationController
+        self.start(coordinator: coordinator)
+
+        dump(self.childCoordinators.description, name: "childCoordinators")
+        dump(self.parentCoordinator.debugDescription, name: "parentCoordinator")
+    }
 }
