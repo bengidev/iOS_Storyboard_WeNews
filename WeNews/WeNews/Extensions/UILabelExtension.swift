@@ -9,12 +9,13 @@ import DeviceKit
 import UIKit
 
 extension UILabel {
-    func loadAppLabelStyle(
+    func buildAppLabelStyle(
         withFontName fontName: String = "Apple SD Gothic Neo",
-        witSize size: CGFloat = 17.0,
-        withTextStyle style: UIFont.TextStyle = .body
+        withSize size: CGFloat = 17.0,
+        withTextStyle style: UIFont.TextStyle = .body,
+        withWeightStyle weight: UIFont.Weight = .regular
     ) {
-        guard let customFont = UIFont(name: fontName, size: size) else { return }
+        guard let customFont = UIFont(name: fontName, size: size)?.withWeight(weight) else { return }
         let fontMetrics = UIFontMetrics(forTextStyle: style)
         self.font = fontMetrics.scaledFont(for: customFont)
         self.adjustsFontForContentSizeCategory = true
