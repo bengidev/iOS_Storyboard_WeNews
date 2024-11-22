@@ -18,7 +18,7 @@ class OnboardingViewModel {
 
     let isOnboardingAccessed = BehaviorSubject(value: false)
 
-    private let onboardingCoordinator = OnboardingCoordinator.intance
+    private let coordinator = OnboardingCoordinator.intance
     private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
@@ -45,7 +45,7 @@ class OnboardingViewModel {
             .disposed(by: self.disposeBag)
     }
 
-    func navigateToHomeScreen() {
-        self.onboardingCoordinator.navigateToHomeScreen()
+    func navigateToMainScreen() {
+        self.coordinator.navigateToMainScreen()
     }
 }
