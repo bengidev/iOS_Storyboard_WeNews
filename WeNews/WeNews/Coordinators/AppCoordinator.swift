@@ -39,12 +39,14 @@ class AppCoordinator: BaseCoordinator {
 
                     // Here you could check if user is signed in and show appropriate screen
                     if result {
-                        coordinator = HomeCoordinator.intance
+                        coordinator = MainCoordinator.intance
                     } else {
                         coordinator = OnboardingCoordinator.intance
                     }
 
                     coordinator.navigationController = self.navigationController
+
+                    self.removeChildCoordinators()
                     self.start(coordinator: coordinator)
                 }
             }
