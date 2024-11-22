@@ -32,10 +32,11 @@ class OnboardingCoordinator: BaseCoordinator {
 
     // MARK: Functions
 
-    func navigateToHomeScreen() {
+    func navigateToMainScreen() {
+        self.parentCoordinator?.didFinish(coordinator: self)
         self.removeChildCoordinators()
 
-        let coordinator = HomeCoordinator.intance
+        let coordinator = MainCoordinator.intance
         coordinator.navigationController = self.navigationController
         self.start(coordinator: coordinator)
     }
