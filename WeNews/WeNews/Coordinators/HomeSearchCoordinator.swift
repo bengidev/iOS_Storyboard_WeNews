@@ -29,4 +29,11 @@ class HomeSearchCoordinator: BaseCoordinator {
 
         self.navigationController.pushViewController(homeSearchViewController, animated: true)
     }
+
+    // MARK: Functions
+
+    func navigateBackToHomeScreen() {
+        self.parentCoordinator?.didFinish(coordinator: self)
+        self.navigationController.popViewController(animated: true)
+    }
 }
