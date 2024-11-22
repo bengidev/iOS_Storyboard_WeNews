@@ -150,7 +150,7 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
             guard let self else { return }
 
             self.viewModel.setOnboardingAccess(to: true)
-            self.viewModel.navigateToHomeScreen()
+            self.viewModel.navigateToMainScreen()
         }.disposed(by: self.disposeBag)
     }
 }
