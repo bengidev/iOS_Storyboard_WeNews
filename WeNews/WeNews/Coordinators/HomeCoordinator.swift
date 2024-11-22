@@ -27,7 +27,6 @@ class HomeCoordinator: BaseCoordinator {
         let viewController = HomeViewController.generateController()
         guard let homeViewController = viewController as? HomeViewController else { return }
 
-        self.navigationController.pushViewController(homeViewController, animated: true)
         self.navigationController.setViewControllers([homeViewController], animated: true)
     }
 
@@ -37,8 +36,5 @@ class HomeCoordinator: BaseCoordinator {
         let coordinator = HomeSearchCoordinator.intance
         coordinator.navigationController = self.navigationController
         self.start(coordinator: coordinator)
-
-        dump(self.childCoordinators.description, name: "childCoordinators")
-        dump(self.parentCoordinator.debugDescription, name: "parentCoordinator")
     }
 }
