@@ -10,21 +10,20 @@ import RxCocoa
 import RxSwift
 
 class HomeViewModel {
-    // MARK: Static Properties
-
-    static let instance: HomeViewModel = .init()
-
     // MARK: Properties
 
     let currentNews = BehaviorSubject<CurrentNews>(value: .empty)
+    let shouldNavigateToSearchScreen = BehaviorSubject<Bool>(value: false)
 
     private let disposeBag = DisposeBag()
-    private let coordinator = HomeCoordinator.intance
-    private let apiSource = CurrentsAPISource.instance
+
+    private let apiSource: CurrentsAPISource
 
     // MARK: Lifecycle
 
-    init() {}
+    init(apiSource: CurrentsAPISource) {
+        self.apiSource = apiSource
+    }
 
     // MARK: Functions
 
@@ -76,7 +75,7 @@ class HomeViewModel {
             .disposed(by: self.disposeBag)
     }
 
-    func navigateToHomeSearchScreen() {
-        self.coordinator.navigateToHomeSearchScreen()
+    func setShouldNavigateToSearchScreen(to value: Bool) {
+        self.shouldNavigateToSearchScreen.onNext(value)
     }
 }
