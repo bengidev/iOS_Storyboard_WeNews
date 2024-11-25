@@ -10,23 +10,22 @@ import RxCocoa
 import RxSwift
 
 class MainViewModel {
-    // MARK: Static Properties
-
-    static let instance: MainViewModel = .init()
-
     // MARK: Properties
 
-    let didSelectScreen = BehaviorSubject(value: MainScreenType.home)
+    let selectedScreen = BehaviorSubject<MainScreenType>(value: .home)
 
-    private let coordinator: MainCoordinator = .intance
-    
     // MARK: Lifecycle
 
-    private init() {}
+    init() {}
 
     // MARK: Functions
 
     func changeSelectedScreen(to value: MainScreenType) {
-        self.didSelectScreen.onNext(value)
+        switch value {
+        case .home:
+            self.selectedScreen.onNext(.home)
+        case .favorite:
+            self.selectedScreen.onNext(.favorite)
+        }
     }
 }
