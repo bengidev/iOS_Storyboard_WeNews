@@ -15,24 +15,46 @@ class HomeSearchCoordinator: BaseCoordinator {
 
     // MARK: Properties
 
+    private let viewModel: HomeSearchViewModel
+
     private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
 
-    override private init() {}
+    override private init() {
+        self.viewModel = .init()
+    }
 
     // MARK: Overridden Functions
 
     override func start() {
+        self.buildViewModelBindings()
+
         let viewController = HomeSearchViewController.generateController()
         guard let homeSearchViewController = viewController as? HomeSearchViewController else { return }
+        homeSearchViewController.viewModel = self.viewModel
 
         self.navigationController.pushViewController(homeSearchViewController, animated: true)
     }
 
     // MARK: Functions
 
-    func navigateBackToHomeScreen() {
+    private func buildViewModelBindings() {
+        self.bindShouldBackToHomeScreenResult()
+    }
+
+    private func bindShouldBackToHomeScreenResult() {
+        self.viewModel.shouldBackToHomeScreen
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                if result { self.navigateBackToHomeScreen() }
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func navigateBackToHomeScreen() {
         self.parentCoordinator?.didFinish(coordinator: self)
         self.navigationController.popViewController(animated: true)
     }
