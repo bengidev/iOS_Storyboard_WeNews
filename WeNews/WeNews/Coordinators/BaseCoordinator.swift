@@ -34,8 +34,8 @@ class BaseCoordinator: Coordinator {
         coordinator.parentCoordinator = self
         coordinator.start()
 
-        dump(self.parentCoordinator.debugDescription, name: "start parent")
-        dump(self.childCoordinators.debugDescription, name: "start coordinators")
+        dump(self.parentCoordinator.debugDescription, name: "parent")
+        dump(self.childCoordinators.debugDescription, name: "children")
     }
 
     /// Removes all child coordinators from parent
