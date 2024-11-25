@@ -20,8 +20,9 @@ class HomeViewController: UIViewController, AppStoryboard {
 
     // MARK: Properties
 
+    weak var viewModel: HomeViewModel?
+
     private let disposeBag = DisposeBag()
-    private let viewModel = HomeViewModel.instance
 
     @IBOutlet private var greetingHeaderLabel: UILabel!
     @IBOutlet private var greetingFooterLabel: UILabel!
@@ -62,6 +63,7 @@ class HomeViewController: UIViewController, AppStoryboard {
         super.viewWillAppear(animated)
 
         self.buildFeatureStyles()
+        self.resetControllerBindings()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -92,7 +94,7 @@ class HomeViewController: UIViewController, AppStoryboard {
 
     // MARK: Static Functions
 
-    static func generateController() -> (AppStoryboard & UIViewController)? {
+    static func generateController() -> (any AppStoryboard & UIViewController)? {
         let bundle = Bundle(for: HomeViewController.self)
         let id = HomeViewController.id
         let name = HomeViewController.name
@@ -129,16 +131,20 @@ class HomeViewController: UIViewController, AppStoryboard {
 //            })
 //            .disposed(by: self.disposeBag)
     }
+    
+    private func resetControllerBindings() {
+        self.viewModel?.setShouldNavigateToSearchScreen(to: false)
+    }
 
     private func buildFeatureStyles() {
-        self.buildNavigationStyles()
+        self.buildNavigationStyle()
         self.buildHeaderGreetingLabelStyle()
         self.buildFooterGreetingLabelStyle()
         self.buildGreetingIconImageStyle()
         self.buildSearchBarStyle()
     }
 
-    private func buildNavigationStyles() {
+    private func buildNavigationStyle() {
         self.navigationController?.navigationBar.isHidden = true
     }
 
@@ -167,7 +173,7 @@ class HomeViewController: UIViewController, AppStoryboard {
     }
 
     @objc private func handleSearchBarTapGesture(_ sender: UITapGestureRecognizer) {
-        dump(sender, name: "handleSearchBarTapGesture")
+
     }
 }
 
@@ -175,9 +181,8 @@ class HomeViewController: UIViewController, AppStoryboard {
 
 extension HomeViewController: UISearchBarDelegate {
     func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
-        dump(searchBar, name: "searchBarShouldBeginEditing")
 
-        self.viewModel.navigateToHomeSearchScreen()
+        self.viewModel?.setShouldNavigateToSearchScreen(to: true)
         return false
     }
 }

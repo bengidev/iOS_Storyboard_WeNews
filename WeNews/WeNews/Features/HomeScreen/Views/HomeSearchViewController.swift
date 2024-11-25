@@ -17,6 +17,8 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
 
     // MARK: Properties
 
+    weak var viewModel: HomeSearchViewModel?
+
     @IBOutlet private var tableView: UITableView!
 
     // MARK: Lifecycle
@@ -54,6 +56,7 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
         super.viewWillAppear(animated)
 
         self.buildFeatureStyles()
+        self.resetControllerBindings()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -73,6 +76,8 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+
+        self.viewModel?.setShouldBackToHomeScreen(to: true)
     }
 
     /// This method is called after the VC’s view has been removed from the view hierarchy.
@@ -108,6 +113,10 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
+
+    private func resetControllerBindings() {
+        self.viewModel?.setShouldBackToHomeScreen(to: false)
+    }
 }
 
 // MARK: UITableViewDelegate
@@ -138,7 +147,7 @@ extension HomeSearchViewController: UITableViewDataSource {
             title: "Apple debuts The Weeknd: Open Hearts, the first-of-its-kind immersive music experience for Apple Vision Pro",
             body: "Today, Apple released The Weeknd: Open Hearts, a breathtaking immersive music experience from the seven-time diamond-certified artist, available exclusively on Apple Vision Pro for a limited time.")
         )
-        
+
         return cell
     }
 }
