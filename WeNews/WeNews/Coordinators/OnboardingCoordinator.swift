@@ -17,22 +17,42 @@ class OnboardingCoordinator: BaseCoordinator {
 
     private let disposeBag = DisposeBag()
 
+    private let viewModel: OnboardingViewModel
+
     // MARK: Lifecycle
 
-    override private init() {}
+    override private init() {
+        self.viewModel = .init()
+    }
 
     // MARK: Overridden Functions
 
     override func start() {
+        self.buildViewModelBindings()
+
         let viewController = OnboardingViewController.generateController()
         guard let onboardingViewController = viewController as? OnboardingViewController else { return }
+        onboardingViewController.viewModel = self.viewModel
 
         self.navigationController.setViewControllers([onboardingViewController], animated: true)
     }
 
     // MARK: Functions
 
-    func navigateToMainScreen() {
+    private func buildViewModelBindings() {
+        self.viewModel.shouldNavigateToMainScreen
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                if result {
+                    self.navigateToMainScreen()
+                }
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func navigateToMainScreen() {
         self.parentCoordinator?.didFinish(coordinator: self)
         self.removeChildCoordinators()
 
