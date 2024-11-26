@@ -24,32 +24,22 @@ class AppCoordinator: BaseCoordinator {
     // MARK: Overridden Functions
 
     override func start() {
-        self.navigationController.navigationBar.isHidden = true
-
         self.window.rootViewController = self.navigationController
         self.window.makeKeyAndVisible()
 
-        UserDefaultSource
-            .instance
-            .getHaveAccessOnboarding()
-            .observe(on: MainScheduler.instance)
-            .subscribe { event in
-                if case let .success(result) = event {
-                    let coordinator: BaseCoordinator
+        let coordinator = OnboardingCoordinator.instance
+        coordinator.navigationController = self.navigationController
 
-                    // Here you could check if user is signed in and show appropriate screen
-                    if result {
-                        coordinator = MainCoordinator.intance
-                    } else {
-                        coordinator = OnboardingCoordinator.intance
-                    }
+        self.buildNavigationStyle(with: coordinator)
+        self.willStart(coordinator: coordinator)
+    }
 
-                    coordinator.navigationController = self.navigationController
+    override func finish() {}
 
-                    self.removeChildCoordinators()
-                    self.start(coordinator: coordinator)
-                }
-            }
-            .disposed(by: self.disposeBag)
+    // MARK: Functions
+
+    private func buildNavigationStyle(with coordinator: Coordinator) {
+        coordinator.navigationController.navigationBar.isHidden = true
+        coordinator.navigationController.navigationBar.prefersLargeTitles = false
     }
 }
