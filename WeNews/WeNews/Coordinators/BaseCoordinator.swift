@@ -10,8 +10,6 @@ import UIKit
 class BaseCoordinator: Coordinator {
     // MARK: Properties
 
-    var childCoordinators: [Coordinator] = []
-    var parentCoordinator: Coordinator?
     var navigationController = UINavigationController()
 
     // MARK: Lifecycle
@@ -20,52 +18,24 @@ class BaseCoordinator: Coordinator {
 
     // MARK: Functions
 
-    /// Implements the concrete start method in related coordinator
+    /// Initiates controller flow in related coordinator
     ///
     func start() { fatalError("start method must be implemented") }
 
-    /// Appends child coordinator and set the parent coordinator
-    ///
     /// This method usually used in conjunction to show related feature
     ///
-    func start(coordinator: Coordinator) {
-        self.childCoordinators.append(coordinator)
-
-        coordinator.parentCoordinator = self
+    func willStart(coordinator: Coordinator) {
         coordinator.start()
-
-        dump(self.parentCoordinator.debugDescription, name: "parent")
-        dump(self.childCoordinators.debugDescription, name: "children")
     }
 
-    /// Removes all child coordinators from parent
+    /// Ends controller flow in related coordinator
     ///
-    /// This methods usually used when switch to another feature
-    ///
-    func removeChildCoordinators() {
-        dump(self.childCoordinators.debugDescription, name: "removeChildCoordinators before")
+    func finish() { fatalError("finish method must be implemented") }
 
-        for childCoordinator in self.childCoordinators {
-            childCoordinator.removeChildCoordinators()
-        }
-
-        self.childCoordinators.removeAll()
-
-        dump(self.childCoordinators.debugDescription, name: "removeChildCoordinators after")
-    }
-
-    /// Removes latest child coordinator from parent
-    ///
     /// This method usually used when interaction with current
     /// child coordinator finish
     ///
-    func didFinish(coordinator: Coordinator) {
-        if let index = self.childCoordinators.firstIndex(where: { $0 === coordinator }) {
-            dump(self.childCoordinators.debugDescription, name: "didFinish before")
-
-            self.childCoordinators.remove(at: index)
-
-            dump(self.childCoordinators.debugDescription, name: "didFinish after")
-        }
+    func willFinish(coordinator: Coordinator) {
+        coordinator.finish()
     }
 }
