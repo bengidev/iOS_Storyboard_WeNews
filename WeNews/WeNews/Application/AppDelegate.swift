@@ -18,9 +18,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
 
-        let appCoordinator: AppCoordinator = .init(window: self.window ?? .init())
+        let baseWindow = UIWindow(frame: UIScreen.main.bounds)
+        self.window = baseWindow
+
+        let appCoordinator: AppCoordinator = .init(window: baseWindow)
         appCoordinator.start()
 
         return true
     }
 }
+
