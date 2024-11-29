@@ -8,6 +8,8 @@
 import Foundation
 import RxSwift
 
+// MARK: - HomeCoordinator
+
 class HomeCoordinator: BaseCoordinator {
     // MARK: Static Properties
 
@@ -15,7 +17,9 @@ class HomeCoordinator: BaseCoordinator {
 
     // MARK: Properties
 
-    weak var viewModel: HomeViewModel?
+    var viewModel: HomeViewModel?
+
+    private var tapSearchBarNumber = 0
 
     private let disposeBag = DisposeBag()
     private let apiSource = CurrentsAPISource.instance
@@ -33,23 +37,42 @@ class HomeCoordinator: BaseCoordinator {
     // MARK: Functions
 
     private func buildViewModelBindings() {
-        self.bindShouldNavigateToSearchScreenResult()
+        self.bindDidTapSearchBarObservable()
+        self.bindTapSearchBarNumberObservable()
     }
 
-    private func bindShouldNavigateToSearchScreenResult() {
-        self.viewModel?.shouldNavigateToSearchScreen
+    private func bindDidTapSearchBarObservable() {
+        self.viewModel?.didTapSearchBarObservable
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
 
-                if result { self.navigateToHomeSearchScreen() }
+                self.tapSearchBarNumber += 1
+                self.navigateToHomeSearchScreen()
+
             })
             .disposed(by: self.disposeBag)
     }
 
     private func navigateToHomeSearchScreen() {
-        let coordinator = HomeSearchCoordinator.intance
-        coordinator.navigationController = self.navigationController
-        self.start(coordinator: coordinator)
+        if self.tapSearchBarNumber <= 1 {
+            self.removeChildCoordinators()
+
+            let coordinator = HomeSearchCoordinator.intance
+            coordinator.navigationController = self.navigationController
+
+            self.willStart(coordinator: coordinator)
+        }
+    }
+
+    private func bindTapSearchBarNumberObservable() {
+        self.viewModel?.tapSearchBarNumberObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] in
+                guard let self else { return }
+
+                self.tapSearchBarNumber = 0
+            })
+            .disposed(by: self.disposeBag)
     }
 }
