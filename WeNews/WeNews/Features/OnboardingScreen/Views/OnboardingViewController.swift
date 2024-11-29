@@ -18,8 +18,9 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
 
     // MARK: Properties
 
+    weak var viewModel: OnboardingViewModel?
+
     private let disposeBag: DisposeBag = .init()
-    private let viewModel: OnboardingViewModel = .instance
 
     @IBOutlet private var headerLabels: [UILabel]!
     @IBOutlet private var footerLabel: UILabel!
@@ -88,7 +89,7 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
 
     // MARK: Static Functions
 
-    static func generateController() -> (AppStoryboard & UIViewController)? {
+    static func generateController() -> (any AppStoryboard & UIViewController)? {
         let bundle = Bundle(for: OnboardingViewController.self)
         let id = OnboardingViewController.id
         let name = OnboardingViewController.name
@@ -135,22 +136,14 @@ final class OnboardingViewController: UIViewController, AppStoryboard {
 
     private func buildControllerBindings() {
         self.bindGetStartedButton()
-        self.bindOnboardingAccessResult()
-    }
-
-    private func bindOnboardingAccessResult() {
-        self.viewModel.isOnboardingAccessed.observe(on: MainScheduler.instance).subscribe(onNext: { result in
-            dump(result, name: "bindOnboardingAccessResult")
-        })
-        .disposed(by: self.disposeBag)
     }
 
     private func bindGetStartedButton() {
         self.getStartedButton.rx.tap.subscribe { [weak self] _ in
             guard let self else { return }
 
-            self.viewModel.setOnboardingAccess(to: true)
-            self.viewModel.navigateToMainScreen()
+            self.viewModel?.setOnboardingAccess(to: true)
+            self.viewModel?.navigateToMainScreen()
         }.disposed(by: self.disposeBag)
     }
 }
