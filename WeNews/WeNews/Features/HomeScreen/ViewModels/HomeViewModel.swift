@@ -12,16 +12,19 @@ import RxSwift
 class HomeViewModel {
     // MARK: Properties
 
-    let currentNews = BehaviorSubject<CurrentNews>(value: .empty)
-    let shouldNavigateToSearchScreen = BehaviorSubject<Bool>(value: false)
-
-    private let disposeBag = DisposeBag()
+    private(set) var currentNewsObservable = BehaviorSubject<CurrentNews>(value: .empty)
+    private(set) var didTapSearchBarObservable = PublishSubject<Void>()
+    private(set) var tapSearchBarNumberObservable = PublishSubject<Void>()
 
     private let apiSource: CurrentsAPISource
+
+    private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
 
     init(apiSource: CurrentsAPISource) {
+        debugPrint("HomeViewModel init")
+
         self.apiSource = apiSource
     }
 
@@ -30,11 +33,10 @@ class HomeViewModel {
     func requestLatestNews() {
         self.apiSource.sendGetLatestNews()
             .observe(on: MainScheduler.instance)
-            .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { result in
-                self.currentNews.on(.next(result))
+                self.currentNewsObservable.on(.next(result))
             }, onError: { error in
-                self.currentNews.on(.error(error))
+                self.currentNewsObservable.on(.error(error))
             })
             .disposed(by: self.disposeBag)
     }
@@ -42,11 +44,10 @@ class HomeViewModel {
     func requestSearchNews(withKeywords keywords: String) {
         self.apiSource.sendGetSearchNews(withKeywords: keywords)
             .observe(on: MainScheduler.instance)
-            .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { result in
-                self.currentNews.on(.next(result))
+                self.currentNewsObservable.on(.next(result))
             }, onError: { error in
-                self.currentNews.on(.error(error))
+                self.currentNewsObservable.on(.error(error))
             })
             .disposed(by: self.disposeBag)
     }
@@ -54,11 +55,10 @@ class HomeViewModel {
     func requestSearchNews(withCategory category: CategoryNews) {
         self.apiSource.sendGetSearchNews(withCategory: category)
             .observe(on: MainScheduler.instance)
-            .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { result in
-                self.currentNews.on(.next(result))
+                self.currentNewsObservable.on(.next(result))
             }, onError: { error in
-                self.currentNews.on(.error(error))
+                self.currentNewsObservable.on(.error(error))
             })
             .disposed(by: self.disposeBag)
     }
@@ -66,16 +66,19 @@ class HomeViewModel {
     func requestSearchNews(withCountry country: RegionNews) {
         self.apiSource.sendGetSearchNews(withCountry: country)
             .observe(on: MainScheduler.instance)
-            .subscribe(on: MainScheduler.instance)
             .subscribe(onNext: { result in
-                self.currentNews.on(.next(result))
+                self.currentNewsObservable.on(.next(result))
             }, onError: { error in
-                self.currentNews.on(.error(error))
+                self.currentNewsObservable.on(.error(error))
             })
             .disposed(by: self.disposeBag)
     }
 
-    func setShouldNavigateToSearchScreen(to value: Bool) {
-        self.shouldNavigateToSearchScreen.onNext(value)
+    func didTapSearchBar() {
+        self.didTapSearchBarObservable.onNext(())
+    }
+    
+    func resetTapSearchBarNumber() {
+        self.tapSearchBarNumberObservable.onNext(())
     }
 }
