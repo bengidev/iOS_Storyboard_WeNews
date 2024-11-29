@@ -15,6 +15,11 @@ class MainViewController: UITabBarController, AppStoryboard {
     static var id: String = "MainViewController"
     static var name: String = "MainStoryboard"
 
+    // MARK: Properties
+
+    weak var mainViewModel: MainViewModel?
+    weak var homeViewModel: HomeViewModel?
+
     // MARK: Lifecycle
 
     /// Before a view controller is removed from memory, it gets deinitialized.
@@ -103,19 +108,34 @@ class MainViewController: UITabBarController, AppStoryboard {
         self.tabBar.backgroundColor = .init(resource: .background)
         self.tabBar.tintColor = .init(resource: .accent)
         self.tabBar.unselectedItemTintColor = .darkGray
+        self.tabBar.isTranslucent = false
     }
 
     private func buildTabBarItems() {
-        let homeScreen = HomeViewController.generateController()
-        homeScreen?.tabBarItem = .init(title: "Home", image: .homeUnselectIcon, selectedImage: .homeSelectIcon)
-
-        let favoriteScreen = HomeViewController.generateController()
-        favoriteScreen?.tabBarItem = .init(title: "Favorite", image: .favoriteUnselectIcon, selectedImage: .favoriteSelectIcon)
+        let homeScreen = self.buildHomeTabBarItem()
+        let favoriteScreen = self.buildFavoriteTabBarItem()
 
         self.viewControllers = [
-            homeScreen ?? .init(),
-            favoriteScreen ?? .init(),
+            homeScreen,
+            favoriteScreen,
         ]
+    }
+
+    private func buildHomeTabBarItem() -> UIViewController {
+        let homeViewController = HomeViewController.generateController()
+        guard let homeScreen = homeViewController as? HomeViewController else { return .init() }
+        homeScreen.viewModel = self.homeViewModel
+        homeScreen.tabBarItem = .init(title: "Home", image: .homeUnselectIcon, selectedImage: .homeSelectIcon)
+
+        return homeScreen
+    }
+
+    private func buildFavoriteTabBarItem() -> UIViewController {
+        let favoriteViewController = FavoriteViewController.generateController()
+        guard let favoriteScreen = favoriteViewController as? FavoriteViewController else { return .init() }
+        favoriteScreen.tabBarItem = .init(title: "Favorite", image: .favoriteUnselectIcon, selectedImage: .favoriteSelectIcon)
+
+        return favoriteScreen
     }
 }
 
@@ -123,9 +143,11 @@ class MainViewController: UITabBarController, AppStoryboard {
 
 extension MainViewController: UITabBarControllerDelegate {
     override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        dump(item, name: "UITabBarControllerDelegate")
-
         self.buildScreenMoveAnimation(withItem: item)
+
+        if let titleLowercased = item.title?.lowercased() {
+            self.sendSelectedScreenToViewModel(with: titleLowercased)
+        }
     }
 
     private func buildScreenMoveAnimation(withItem item: UITabBarItem) {
@@ -138,6 +160,14 @@ extension MainViewController: UITabBarControllerDelegate {
 
         propertyAnimator.addAnimations({ barItemView.transform = .identity }, delayFactor: CGFloat(timeInterval))
         propertyAnimator.startAnimation()
+    }
+
+    private func sendSelectedScreenToViewModel(with value: String) {
+        if value == "home" {
+            self.mainViewModel?.changeSelectedScreen(to: .home)
+        } else if value == "favorite" {
+            self.mainViewModel?.changeSelectedScreen(to: .favorite)
+        }
     }
 
     func tabBarController(_ tabBarController: UITabBarController, shouldSelect viewController: UIViewController) -> Bool {
