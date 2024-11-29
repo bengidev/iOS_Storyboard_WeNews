@@ -40,22 +40,21 @@ class HomeSearchCoordinator: BaseCoordinator {
     // MARK: Functions
 
     private func buildViewModelBindings() {
-        self.bindShouldBackToHomeScreenResult()
+//        self.bindShouldBackToHomeScreenResult()
     }
 
     private func bindShouldBackToHomeScreenResult() {
-        self.viewModel.shouldBackToHomeScreen
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
-                guard let self else { return }
-
-                if result { self.navigateBackToHomeScreen() }
-            })
-            .disposed(by: self.disposeBag)
+//        self.viewModel.shouldBackToHomeScreen
+//            .observe(on: MainScheduler.instance)
+//            .subscribe(onNext: { [weak self] result in
+//                guard let self else { return }
+//
+//                if result { self.navigateBackToHomeScreen() }
+//            })
+//            .disposed(by: self.disposeBag)
     }
 
     private func navigateBackToHomeScreen() {
-        self.parentCoordinator?.didFinish(coordinator: self)
-        self.navigationController.popViewController(animated: true)
+//        self.navigationController.popViewController(animated: true)
     }
 }
