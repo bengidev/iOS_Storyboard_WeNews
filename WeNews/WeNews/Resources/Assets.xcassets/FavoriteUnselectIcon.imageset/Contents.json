@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Flame@1x.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Flame@2x.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Flame@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "Flame.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {
