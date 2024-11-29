@@ -31,8 +31,6 @@ class AppCoordinator: BaseCoordinator {
         self.buildUserDefaultSourceBindings()
     }
 
-    override func finish() {}
-
     // MARK: Functions
 
     private func buildNavigationStyle(with coordinator: Coordinator) {
