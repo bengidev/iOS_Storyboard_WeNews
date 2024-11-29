@@ -11,40 +11,44 @@ import RxSwift
 class MainCoordinator: BaseCoordinator {
     // MARK: Static Properties
 
-    static let intance: MainCoordinator = .init()
+    static let instance: MainCoordinator = .init()
 
     // MARK: Properties
 
+    private let currentsApiSource = CurrentsAPISource.instance
     private let disposeBag = DisposeBag()
 
-    private let mainViewModel: MainViewModel
+    private let viewModel: MainViewModel
     private let homeViewModel: HomeViewModel
 
     // MARK: Lifecycle
 
     override private init() {
-        self.mainViewModel = .init()
-        self.homeViewModel = .init(apiSource: .instance)
+        self.viewModel = .init()
+        self.homeViewModel = .init(apiSource: self.currentsApiSource)
     }
 
     // MARK: Overridden Functions
 
     override func start() {
+        self.buildController()
         self.buildViewModelBindings()
+    }
 
+    // MARK: Functions
+
+    private func buildController() {
         let viewController = MainViewController.generateTabBarController()
         guard let mainViewController = viewController as? MainViewController else { return }
-        mainViewController.mainViewModel = self.mainViewModel
+        mainViewController.mainViewModel = self.viewModel
         mainViewController.homeViewModel = self.homeViewModel
 
         self.navigationController.pushViewController(mainViewController, animated: true)
         self.navigationController.setViewControllers([mainViewController], animated: true)
     }
 
-    // MARK: Functions
-
     private func buildViewModelBindings() {
-        self.mainViewModel.selectedScreen
+        self.viewModel.selectedScreenObservable
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
@@ -63,9 +67,10 @@ class MainCoordinator: BaseCoordinator {
         self.removeChildCoordinators()
 
         let coordinator = HomeCoordinator.intance
-        coordinator.viewModel = self.homeViewModel
         coordinator.navigationController = self.navigationController
-        self.start(coordinator: coordinator)
+        coordinator.viewModel = self.homeViewModel
+
+        self.willStart(coordinator: coordinator)
     }
 
     private func navigateToFavoriteScreen() {
@@ -73,6 +78,7 @@ class MainCoordinator: BaseCoordinator {
 
         let coordinator = FavoriteCoordinator.intance
         coordinator.navigationController = self.navigationController
-        self.start(coordinator: coordinator)
+
+        self.willStart(coordinator: coordinator)
     }
 }
