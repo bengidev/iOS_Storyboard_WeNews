@@ -49,8 +49,6 @@ class HomeViewController: UIViewController, AppStoryboard {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.buildControllerBindings()
     }
 
     /// This method is called every time before the view is visible to and before any animation is configured.
@@ -63,7 +61,7 @@ class HomeViewController: UIViewController, AppStoryboard {
         super.viewWillAppear(animated)
 
         self.buildFeatureStyles()
-        self.resetControllerBindings()
+        self.buildControllerBindings()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -90,6 +88,8 @@ class HomeViewController: UIViewController, AppStoryboard {
     ///
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+        self.viewModel?.resetTapSearchBarNumber()
     }
 
     // MARK: Static Functions
@@ -120,7 +120,7 @@ class HomeViewController: UIViewController, AppStoryboard {
 //            })
 //            .disposed(by: self.disposeBag)
 //
-//        self.viewModel.currentNews
+//        self.viewModel.currentNewsObservable
 //            .skip(while: { $0.status.isEmpty })
 //            .observe(on: MainScheduler.instance)
 //            .subscribe(on: MainScheduler.instance)
@@ -130,10 +130,6 @@ class HomeViewController: UIViewController, AppStoryboard {
 //                dump(error.localizedDescription, name: "buildControllerBindings")
 //            })
 //            .disposed(by: self.disposeBag)
-    }
-    
-    private func resetControllerBindings() {
-        self.viewModel?.setShouldNavigateToSearchScreen(to: false)
     }
 
     private func buildFeatureStyles() {
@@ -146,6 +142,7 @@ class HomeViewController: UIViewController, AppStoryboard {
 
     private func buildNavigationStyle() {
         self.navigationController?.navigationBar.isHidden = true
+        self.navigationController?.navigationBar.prefersLargeTitles = false
     }
 
     private func buildHeaderGreetingLabelStyle() {
@@ -171,18 +168,14 @@ class HomeViewController: UIViewController, AppStoryboard {
     private func buildSearchBarStyle() {
         self.searchBar.delegate = self
     }
-
-    @objc private func handleSearchBarTapGesture(_ sender: UITapGestureRecognizer) {
-
-    }
 }
 
 // MARK: UISearchBarDelegate
 
 extension HomeViewController: UISearchBarDelegate {
-    func searchBarShouldBeginEditing(_ searchBar: UISearchBar) -> Bool {
+    func searchBarShouldBeginEditing(_: UISearchBar) -> Bool {
+        self.viewModel?.didTapSearchBar()
 
-        self.viewModel?.setShouldNavigateToSearchScreen(to: true)
         return false
     }
 }
