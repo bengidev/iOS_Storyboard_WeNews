@@ -17,12 +17,13 @@ class HomeSearchCoordinator: BaseCoordinator {
 
     private let viewModel: HomeSearchViewModel
 
+    private let currentsApiSource = CurrentsAPISource.instance
     private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
 
     override private init() {
-        self.viewModel = .init()
+        self.viewModel = .init(apiSource: self.currentsApiSource)
     }
 
     // MARK: Overridden Functions
@@ -35,6 +36,10 @@ class HomeSearchCoordinator: BaseCoordinator {
         homeSearchViewController.viewModel = self.viewModel
 
         self.navigationController.pushViewController(homeSearchViewController, animated: true)
+    }
+    
+    override func finish() {
+        //
     }
 
     // MARK: Functions
