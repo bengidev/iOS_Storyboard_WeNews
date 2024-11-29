@@ -10,42 +10,37 @@ import RxCocoa
 import RxSwift
 
 class OnboardingViewModel {
-    // MARK: Static Properties
-
-    static let instance: OnboardingViewModel = .init()
-
     // MARK: Properties
 
-    let isOnboardingAccessed = BehaviorSubject(value: false)
+    private(set) var onboardingAccessObservable = PublishSubject<Bool>()
+    private(set) var didTapGetStartedButtonObservable = PublishSubject<Void>()
 
-    private let coordinator = OnboardingCoordinator.intance
     private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
 
-    private init() {}
+    init() {}
 
     // MARK: Functions
 
     func setOnboardingAccess(to value: Bool) {
-        self.isOnboardingAccessed.onNext(value)
-        UserDefaultSource.instance.setHaveAccessOnboarding(to: value)
+        self.onboardingAccessObservable.onNext(value)
+
+        UserDefaultSource.instance.setAccessOnboardingResult(to: value)
     }
 
-    func requestOnboardingAccess() {
-        UserDefaultSource
-            .instance
-            .getHaveAccessOnboarding()
+    func getOnboardingAccessResult() {
+        UserDefaultSource.instance.getAccessOnboardingResult()
             .observe(on: MainScheduler.instance)
             .subscribe { event in
                 if case let .success(result) = event {
-                    self.isOnboardingAccessed.onNext(result)
+                    self.onboardingAccessObservable.onNext(result)
                 }
             }
             .disposed(by: self.disposeBag)
     }
 
     func navigateToMainScreen() {
-        self.coordinator.navigateToMainScreen()
+        self.didTapGetStartedButtonObservable.onNext(())
     }
 }
