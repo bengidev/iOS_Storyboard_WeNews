@@ -13,6 +13,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
 
+    private var appCoordinator: AppCoordinator?
+
     // MARK: Functions
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
@@ -21,10 +23,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let baseWindow = UIWindow(frame: UIScreen.main.bounds)
         self.window = baseWindow
 
-        let appCoordinator: AppCoordinator = .init(window: baseWindow)
-        appCoordinator.start()
+        self.appCoordinator = .init(window: baseWindow)
+        self.appCoordinator?.start()
 
         return true
     }
 }
-
