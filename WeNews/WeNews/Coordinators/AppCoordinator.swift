@@ -27,11 +27,8 @@ class AppCoordinator: BaseCoordinator {
         self.window.rootViewController = self.navigationController
         self.window.makeKeyAndVisible()
 
-        let coordinator = OnboardingCoordinator.instance
-        coordinator.navigationController = self.navigationController
-
-        self.buildNavigationStyle(with: coordinator)
-        self.willStart(coordinator: coordinator)
+        self.buildNavigationStyle(with: self)
+        self.buildUserDefaultSourceBindings()
     }
 
     override func finish() {}
@@ -41,5 +38,34 @@ class AppCoordinator: BaseCoordinator {
     private func buildNavigationStyle(with coordinator: Coordinator) {
         coordinator.navigationController.navigationBar.isHidden = true
         coordinator.navigationController.navigationBar.prefersLargeTitles = false
+    }
+
+    private func buildUserDefaultSourceBindings() {
+        UserDefaultSource.instance.getAccessOnboardingResult()
+            .observe(on: MainScheduler.instance)
+            .subscribe(onSuccess: { [weak self] result in
+                guard let self else { return }
+
+                if result {
+                    self.navigateToMainScreen()
+                } else {
+                    self.navigateToOnboardingScreen()
+                }
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func navigateToOnboardingScreen() {
+        let coordinator = OnboardingCoordinator.instance
+        coordinator.navigationController = self.navigationController
+
+        self.willStart(coordinator: coordinator)
+    }
+
+    private func navigateToMainScreen() {
+        let coordinator = MainCoordinator.instance
+        coordinator.navigationController = self.navigationController
+
+        self.willStart(coordinator: coordinator)
     }
 }
