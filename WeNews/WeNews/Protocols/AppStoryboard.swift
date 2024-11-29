@@ -9,20 +9,23 @@ import UIKit
 
 // MARK: - AppStoryboard
 
-protocol AppStoryboard {
+protocol AppStoryboard: AnyObject {
+    associatedtype ViewController = UIViewController & AppStoryboard
+    associatedtype TabBarController = UITabBarController & AppStoryboard
+    
     static var id: String { get }
     static var name: String { get }
 
-    static func generateController() -> (AppStoryboard & UIViewController)?
-    static func generateTabBarController() -> (AppStoryboard & UITabBarController)?
+    static func generateController() -> ViewController?
+    static func generateTabBarController() -> TabBarController?
 }
 
 extension AppStoryboard {
-    static func generateTabBarController() -> (AppStoryboard & UITabBarController)? {
-        fatalError("generateTabBarController method must be implemented")
-    }
-
-    static func generateController() -> (AppStoryboard & UIViewController)? {
+    static func generateController() -> ViewController? {
         fatalError("generateController method must be implemented")
+    }
+    
+    static func generateTabBarController() -> TabBarController? {
+        fatalError("generateTabBarController method must be implemented")
     }
 }
