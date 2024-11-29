@@ -12,7 +12,7 @@ import RxSwift
 class MainViewModel {
     // MARK: Properties
 
-    let selectedScreen = BehaviorSubject<MainScreenType>(value: .home)
+    private(set) var selectedScreenObservable = BehaviorSubject<MainScreenType>(value: .home)
 
     // MARK: Lifecycle
 
@@ -23,9 +23,9 @@ class MainViewModel {
     func changeSelectedScreen(to value: MainScreenType) {
         switch value {
         case .home:
-            self.selectedScreen.onNext(.home)
+            self.selectedScreenObservable.onNext(.home)
         case .favorite:
-            self.selectedScreen.onNext(.favorite)
+            self.selectedScreenObservable.onNext(.favorite)
         }
     }
 }
