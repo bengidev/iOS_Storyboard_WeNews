@@ -38,7 +38,7 @@ class BaseCoordinator: Coordinator {
 
     /// Ends controller flow in related coordinator
     ///
-    func finish() { fatalError("finish method must be implemented") }
+    func finish() {}
 
     /// Removes the coordinator when interaction with current
     /// child coordinator finished
