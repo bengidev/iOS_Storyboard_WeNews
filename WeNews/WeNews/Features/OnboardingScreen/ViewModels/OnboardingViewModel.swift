@@ -43,4 +43,9 @@ class OnboardingViewModel {
     func navigateToMainScreen() {
         self.didTapGetStartedButtonObservable.onNext(())
     }
+    
+    func disposeAllObservables() {
+        self.onboardingAccessObservable.dispose()
+        self.didTapGetStartedButtonObservable.dispose()
+    }
 }

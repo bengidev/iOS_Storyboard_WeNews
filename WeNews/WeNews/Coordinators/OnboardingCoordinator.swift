@@ -32,6 +32,10 @@ class OnboardingCoordinator: BaseCoordinator {
         self.buildViewModelBindings()
     }
 
+    override func finish() {
+        self.viewModel.disposeAllObservables()
+    }
+
     // MARK: Functions
 
     private func buildController() {
