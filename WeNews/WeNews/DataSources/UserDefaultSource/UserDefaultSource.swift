@@ -19,7 +19,7 @@ class UserDefaultSource {
 
     // MARK: Functions
 
-    func getHaveAccessOnboarding() -> Single<Bool> {
+    func getAccessOnboardingResult() -> Single<Bool> {
         return Single.create { observer in
             DispatchQueue.global(qos: .background).async {
                 observer(.success(UserDefaults.standard.bool(forKey: "AccessOnboarding")))
@@ -29,7 +29,7 @@ class UserDefaultSource {
         }
     }
 
-    func setHaveAccessOnboarding(to value: Bool) {
+    func setAccessOnboardingResult(to value: Bool) {
         UserDefaults.standard.setValue(value, forKey: "AccessOnboarding")
     }
 }
