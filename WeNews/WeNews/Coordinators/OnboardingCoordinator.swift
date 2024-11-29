@@ -11,7 +11,7 @@ import RxSwift
 class OnboardingCoordinator: BaseCoordinator {
     // MARK: Static Properties
 
-    static let intance: OnboardingCoordinator = .init()
+    static let instance: OnboardingCoordinator = .init()
 
     // MARK: Properties
 
@@ -28,8 +28,13 @@ class OnboardingCoordinator: BaseCoordinator {
     // MARK: Overridden Functions
 
     override func start() {
+        self.buildController()
         self.buildViewModelBindings()
+    }
 
+    // MARK: Functions
+
+    private func buildController() {
         let viewController = OnboardingViewController.generateController()
         guard let onboardingViewController = viewController as? OnboardingViewController else { return }
         onboardingViewController.viewModel = self.viewModel
@@ -37,27 +42,26 @@ class OnboardingCoordinator: BaseCoordinator {
         self.navigationController.setViewControllers([onboardingViewController], animated: true)
     }
 
-    // MARK: Functions
-
     private func buildViewModelBindings() {
-        self.viewModel.shouldNavigateToMainScreen
+        self.viewModel.didTapGetStartedButtonObservable
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
+            .subscribe(onNext: { [weak self] in
                 guard let self else { return }
 
-                if result {
-                    self.navigateToMainScreen()
-                }
+                self.navigateToMainScreen()
             })
             .disposed(by: self.disposeBag)
     }
 
     private func navigateToMainScreen() {
-        self.parentCoordinator?.didFinish(coordinator: self)
-        self.removeChildCoordinators()
+        // Refer parentCoordinator to `AppCoordinator`
+        // Remove this coordinator, bacause it's just show only once
+        //
+        self.parentCoordinator?.willFinish(coordinator: self)
 
-        let coordinator = MainCoordinator.intance
+        let coordinator = MainCoordinator.instance
         coordinator.navigationController = self.navigationController
-        self.start(coordinator: coordinator)
+
+        self.parentCoordinator?.willStart(coordinator: coordinator)
     }
 }
