@@ -5,6 +5,8 @@
 //  Created by ENB Mac Mini M1 on 21/11/24.
 //
 
+import RxCocoa
+import RxSwift
 import UIKit
 
 // MARK: - HomeSearchViewController
@@ -19,6 +21,9 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
 
     weak var viewModel: HomeSearchViewModel?
 
+    private let disposeBag = DisposeBag()
+
+    @IBOutlet private var searchBar: UISearchBar!
     @IBOutlet private var tableView: UITableView!
 
     // MARK: Lifecycle
@@ -42,8 +47,8 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.tableView.dataSource = self
-        self.tableView.delegate = self
+        self.buildFeatureStyles()
+        self.buildControllerBindings()
     }
 
     /// This method is called every time before the view is visible to and before any animation is configured.
@@ -54,9 +59,6 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
-        self.buildFeatureStyles()
-        self.resetControllerBindings()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -76,8 +78,6 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-
-        self.viewModel?.setShouldBackToHomeScreen(to: true)
     }
 
     /// This method is called after the VC’s view has been removed from the view hierarchy.
@@ -114,8 +114,16 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
 
-    private func resetControllerBindings() {
-        self.viewModel?.setShouldBackToHomeScreen(to: false)
+    private func buildControllerBindings() {
+        self.bindSearchBarText()
+    }
+
+    private func bindSearchBarText() {
+        guard let viewModel else { return }
+
+        self.searchBar.rx.text.orEmpty
+            .bind(to: viewModel.searchBarTextObservable)
+            .disposed(by: self.disposeBag)
     }
 }
 
@@ -143,7 +151,7 @@ extension HomeSearchViewController: UITableViewDataSource {
         }
 
         cell.updateView(withNews: .init(
-            image: .dummyIcon,
+            image: "dummyIcon",
             title: "Apple debuts The Weeknd: Open Hearts, the first-of-its-kind immersive music experience for Apple Vision Pro",
             body: "Today, Apple released The Weeknd: Open Hearts, a breathtaking immersive music experience from the seven-time diamond-certified artist, available exclusively on Apple Vision Pro for a limited time.")
         )
@@ -151,3 +159,7 @@ extension HomeSearchViewController: UITableViewDataSource {
         return cell
     }
 }
+
+// MARK: UISearchBarDelegate
+
+extension HomeSearchViewController: UISearchBarDelegate {}
