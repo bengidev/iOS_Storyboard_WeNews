@@ -49,17 +49,6 @@ class HomeViewModel {
             .disposed(by: self.disposeBag)
     }
 
-    func requestSearchNews(withKeywords keywords: String) {
-        self.apiSource.sendGetSearchNews(withKeywords: keywords)
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { result in
-                self.currentNewsObservable.on(.next(result))
-            }, onError: { error in
-                self.currentNewsObservable.on(.error(error))
-            })
-            .disposed(by: self.disposeBag)
-    }
-
     func requestSearchNews(withCategory category: CategoryNews) {
         self.apiSource.sendGetSearchNews(withCategory: category)
             .observe(on: MainScheduler.instance)
