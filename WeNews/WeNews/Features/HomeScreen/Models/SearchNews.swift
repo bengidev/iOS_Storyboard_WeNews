@@ -12,14 +12,14 @@ import UIKit
 struct SearchNews: Identifiable, Sendable, Equatable {
     let id: UUID = .init()
 
-    let image: UIImage
+    let image: String
     let title: String
     let body: String
 }
 
 extension SearchNews {
     func with(
-        image: UIImage? = nil,
+        image: String? = nil,
         title: String? = nil,
         body: String? = nil
     ) -> SearchNews {
