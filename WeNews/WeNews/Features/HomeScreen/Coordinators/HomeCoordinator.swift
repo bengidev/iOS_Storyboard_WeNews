@@ -19,8 +19,6 @@ class HomeCoordinator: BaseCoordinator {
 
     var viewModel: HomeViewModel?
 
-    private var tapSearchBarNumber = 0
-
     private let disposeBag = DisposeBag()
     private let apiSource = CurrentsAPISource.instance
 
@@ -31,6 +29,8 @@ class HomeCoordinator: BaseCoordinator {
     // MARK: Overridden Functions
 
     override func start() {
+        self.viewModel?.resetViewModelObservables()
+
         self.buildViewModelBindings()
     }
 
@@ -38,16 +38,16 @@ class HomeCoordinator: BaseCoordinator {
 
     private func buildViewModelBindings() {
         self.bindDidTapSearchBarObservable()
-        self.bindTapSearchBarNumberObservable()
     }
 
     private func bindDidTapSearchBarObservable() {
         self.viewModel?.didTapSearchBarObservable
+            .debug()
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] _ in
+            .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
 
-                self.tapSearchBarNumber += 1
+                dump(result, name: "bindDidTapSearchBarObservable")
                 self.navigateToHomeSearchScreen()
 
             })
@@ -55,24 +55,11 @@ class HomeCoordinator: BaseCoordinator {
     }
 
     private func navigateToHomeSearchScreen() {
-        if self.tapSearchBarNumber <= 1 {
-            self.removeChildCoordinators()
+        self.removeChildCoordinators()
 
-            let coordinator = HomeSearchCoordinator.intance
-            coordinator.navigationController = self.navigationController
+        let coordinator = HomeSearchCoordinator.intance
+        coordinator.navigationController = self.navigationController
 
-            self.willStart(coordinator: coordinator)
-        }
-    }
-
-    private func bindTapSearchBarNumberObservable() {
-        self.viewModel?.tapSearchBarNumberObservable
-            .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in
-                guard let self else { return }
-
-                self.tapSearchBarNumber = 0
-            })
-            .disposed(by: self.disposeBag)
+        self.willStart(coordinator: coordinator)
     }
 }

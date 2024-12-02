@@ -30,6 +30,14 @@ class HomeViewModel {
 
     // MARK: Functions
 
+    func resetViewModelObservables() {
+        debugPrint("resetViewModelObservables")
+
+        self.currentNewsObservable = BehaviorSubject<CurrentNews>(value: .empty)
+        self.didTapSearchBarObservable = PublishSubject<Void>()
+        self.tapSearchBarNumberObservable = PublishSubject<Void>()
+    }
+
     func requestLatestNews() {
         self.apiSource.sendGetLatestNews()
             .observe(on: MainScheduler.instance)
@@ -77,7 +85,7 @@ class HomeViewModel {
     func didTapSearchBar() {
         self.didTapSearchBarObservable.onNext(())
     }
-    
+
     func resetTapSearchBarNumber() {
         self.tapSearchBarNumberObservable.onNext(())
     }
