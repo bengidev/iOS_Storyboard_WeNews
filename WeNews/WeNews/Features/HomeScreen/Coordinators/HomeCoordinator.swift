@@ -30,7 +30,6 @@ class HomeCoordinator: BaseCoordinator {
 
     override func start() {
         self.viewModel?.resetViewModelObservables()
-
         self.buildViewModelBindings()
     }
 
@@ -42,7 +41,6 @@ class HomeCoordinator: BaseCoordinator {
 
     private func bindDidTapSearchBarObservable() {
         self.viewModel?.didTapSearchBarObservable
-            .debug()
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
