@@ -13,7 +13,8 @@ A simple news app for iOS which using Swift and Storyboard to create the UI
 These are credits for resources that this app used
 - [Three muffins sitting on top of a wire rack](https://unsplash.com/photos/three-muffins-sitting-on-top-of-a-wire-rack-Pw6Qtdt2eq0)
 - [A newspaper laying on the ground next to a door](https://unsplash.com/photos/a-newspaper-laying-on-the-ground-next-to-a-door-Y3B6FBaiyi8)
-- [LEGO Batman ](https://unsplash.com/photos/lego-batman-minifig-demvKRNvtLY)
+- [LEGO Batman](https://unsplash.com/photos/lego-batman-minifig-demvKRNvtLY)
+- [Loading](https://unsplash.com/photos/text-jf1EomjlQi0)
 
 
 
