@@ -53,8 +53,6 @@ class HomeCoordinator: BaseCoordinator {
     }
 
     private func navigateToHomeSearchScreen() {
-        self.removeChildCoordinators()
-
         let coordinator = HomeSearchCoordinator.intance
         coordinator.navigationController = self.navigationController
 

@@ -88,8 +88,6 @@ class HomeViewController: UIViewController, AppStoryboard {
     ///
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
-        self.viewModel?.resetTapSearchBarNumber()
     }
 
     // MARK: Static Functions

@@ -15,6 +15,7 @@ class HomeSearchViewModel {
     private(set) var searchBarTextObservable = BehaviorSubject<String>(value: "")
     private(set) var searchNewsObservable = PublishSubject<[SearchNews]>()
     private(set) var didTapBackButtonObservable = PublishSubject<Void>()
+    private(set) var viewDidDisappearObservable = PublishSubject<Void>()
 
     private let apiSource: NewsAPISource
 
@@ -25,7 +26,6 @@ class HomeSearchViewModel {
     init(apiSource: NewsAPISource) {
         self.apiSource = apiSource
 
-        self.resetViewModelObservables()
         self.buildControllerBindings()
     }
 
@@ -34,6 +34,11 @@ class HomeSearchViewModel {
     func resetViewModelObservables() {
         self.searchNewsObservable = PublishSubject<[SearchNews]>()
         self.didTapBackButtonObservable = PublishSubject<Void>()
+        self.viewDidDisappearObservable = PublishSubject<Void>()
+    }
+    
+    func viewDidDisappear() {
+        self.viewDidDisappearObservable.onNext(())
     }
 
     private func buildControllerBindings() {

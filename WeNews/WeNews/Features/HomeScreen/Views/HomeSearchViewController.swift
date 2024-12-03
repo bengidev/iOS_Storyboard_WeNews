@@ -89,6 +89,8 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
+        
+        self.viewModel?.viewDidDisappear()
     }
 
     // MARK: Static Functions

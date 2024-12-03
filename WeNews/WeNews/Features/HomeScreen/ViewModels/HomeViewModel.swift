@@ -14,7 +14,6 @@ class HomeViewModel {
 
     private(set) var newsObservable = BehaviorSubject<News>(value: .empty)
     private(set) var didTapSearchBarObservable = PublishSubject<Void>()
-    private(set) var tapSearchBarNumberObservable = PublishSubject<Void>()
 
     private let apiSource: NewsAPISource
 
@@ -35,14 +34,9 @@ class HomeViewModel {
 
         self.newsObservable = BehaviorSubject<News>(value: .empty)
         self.didTapSearchBarObservable = PublishSubject<Void>()
-        self.tapSearchBarNumberObservable = PublishSubject<Void>()
     }
 
     func didTapSearchBar() {
         self.didTapSearchBarObservable.onNext(())
-    }
-
-    func resetTapSearchBarNumber() {
-        self.tapSearchBarNumberObservable.onNext(())
     }
 }
