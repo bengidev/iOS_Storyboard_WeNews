@@ -13,12 +13,12 @@ class HomeSearchViewModel {
     // MARK: Properties
 
     private(set) var searchBarTextObservable = BehaviorSubject<String>(value: "")
-    private(set) var searchNewsObservable = PublishSubject<[SearchNews]>()
+    private(set) var searchNewsObservable = PublishSubject<[Article]>()
     private(set) var didTapBackButtonObservable = PublishSubject<Void>()
+    private(set) var didSelectNewsObservable = PublishSubject<Article>()
     private(set) var viewDidDisappearObservable = PublishSubject<Void>()
 
     private let apiSource: NewsAPISource
-
     private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
@@ -32,11 +32,16 @@ class HomeSearchViewModel {
     // MARK: Functions
 
     func resetViewModelObservables() {
-        self.searchNewsObservable = PublishSubject<[SearchNews]>()
+        self.searchNewsObservable = PublishSubject<[Article]>()
         self.didTapBackButtonObservable = PublishSubject<Void>()
+        self.didSelectNewsObservable = PublishSubject<Article>()
         self.viewDidDisappearObservable = PublishSubject<Void>()
     }
-    
+
+    func didSelectNews(with news: Article) {
+        self.didSelectNewsObservable.onNext(news)
+    }
+
     func viewDidDisappear() {
         self.viewDidDisappearObservable.onNext(())
     }
@@ -57,26 +62,10 @@ class HomeSearchViewModel {
                     .catchAndReturn(.empty)
             }
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
-            .map { currentNews -> [SearchNews] in
+            .map { currentNews -> [Article] in
                 guard let newsArticles = currentNews.articles else { return .init() }
 
-                let convertedNews = newsArticles.filter { $0.urlToImage != nil }.compactMap {
-                    return SearchNews(
-                        image: $0.urlToImage,
-                        title: $0.title,
-                        body: $0.description
-                    )
-                }
-
-                var searchNews: [SearchNews] = []
-
-                forNews: for news in convertedNews {
-                    if searchNews.count == 10 { break forNews }
-
-                    searchNews.append(news)
-                }
-
-                return convertedNews
+                return newsArticles.filter { $0.urlToImage != nil }
             }
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] result in
