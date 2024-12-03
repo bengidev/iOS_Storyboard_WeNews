@@ -16,7 +16,6 @@ class HomeSearchCoordinator: BaseCoordinator {
     // MARK: Properties
 
     private let viewModel: HomeSearchViewModel
-
     private let newsApiSource = NewsAPISource.instance
     private let disposeBag = DisposeBag()
 
@@ -42,7 +41,19 @@ class HomeSearchCoordinator: BaseCoordinator {
     // MARK: Functions
 
     private func buildViewModelBindings() {
+        self.bindDidSelectNewsObservable()
         self.bindViewDidDisappearObservable()
+    }
+
+    private func bindDidSelectNewsObservable() {
+        self.viewModel.didSelectNewsObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                self.navigateToHomeDetailScreen(with: result)
+            })
+            .disposed(by: self.disposeBag)
     }
 
     private func bindViewDidDisappearObservable() {
@@ -54,5 +65,13 @@ class HomeSearchCoordinator: BaseCoordinator {
                 self.parentCoordinator?.willFinish(coordinator: self)
             })
             .disposed(by: self.disposeBag)
+    }
+
+    private func navigateToHomeDetailScreen(with news: Article) {
+        let coordinator = HomeDetailCoordinator.intance
+        coordinator.navigationController = self.navigationController
+        coordinator.news = news
+
+        self.willStart(coordinator: coordinator)
     }
 }
