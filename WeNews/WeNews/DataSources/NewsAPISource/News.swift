@@ -2,27 +2,41 @@
 //  News.swift
 //  WeNews
 //
-//  Created by ENB Mac Mini M1 on 20/11/24.
+//  Created by ENB Mac Mini M1 on 03/12/24.
 //
+
+// This file was generated from JSON Schema using quicktype, do not modify it directly.
+// To parse the JSON, add this file to your project and do:
+//
+//   let news = try News(json)
 
 import Foundation
 
 // MARK: - News
 
 struct News: Identifiable, Equatable, Codable, Sendable {
-    let id: String
-    let title: String
-    let description: String
-    let url: String
-    let author: String
-    let image: String
-    let category: [String]
-    let published: String
+    var id = UUID()
+
+    let status: String?
+    let totalResults: Int?
+    let articles: [Article]?
 }
 
 // MARK: News convenience initializers and mutators
 
 extension News {
+    enum CodingKeys: CodingKey {
+        case status
+        case totalResults
+        case articles
+    }
+
+    static let empty: News = .init(status: nil, totalResults: nil, articles: nil)
+
+    static func == (lhs: News, rhs: News) -> Bool {
+        return lhs.id == rhs.id
+    }
+
     init(data: Data) throws {
         self = try newJSONDecoder().decode(News.self, from: data)
     }
@@ -39,24 +53,14 @@ extension News {
     }
 
     func with(
-        id: String? = nil,
-        title: String? = nil,
-        description: String? = nil,
-        url: String? = nil,
-        author: String? = nil,
-        image: String? = nil,
-        category: [String]? = nil,
-        published: String? = nil
+        status: String?? = nil,
+        totalResults: Int?? = nil,
+        articles: [Article]?? = nil
     ) -> News {
         return News(
-            id: id ?? self.id,
-            title: title ?? self.title,
-            description: description ?? self.description,
-            url: url ?? self.url,
-            author: author ?? self.author,
-            image: image ?? self.image,
-            category: category ?? self.category,
-            published: published ?? self.published
+            status: status ?? self.status,
+            totalResults: totalResults ?? self.totalResults,
+            articles: articles ?? self.articles
         )
     }
 
