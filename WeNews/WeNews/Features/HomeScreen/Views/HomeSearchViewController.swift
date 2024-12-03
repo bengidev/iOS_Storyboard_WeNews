@@ -24,6 +24,7 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     private let disposeBag = DisposeBag()
     private let animationTime = 0.3
 
+    private var resultNews: [Article] = []
     private var resultSearchNews: [SearchNews] = []
 
     @IBOutlet private var searchBar: UISearchBar!
@@ -50,7 +51,7 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.buildFeatureStyles()
+        self.buildControllerStyles()
         self.buildControllerBindings()
         self.buildViewModelBindings()
     }
@@ -89,7 +90,7 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-        
+
         self.viewModel?.viewDidDisappear()
     }
 
@@ -111,11 +112,13 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
 
     // MARK: Functions
 
-    private func buildFeatureStyles() {
+    private func buildControllerStyles() {
         self.buildNavigationStyle()
     }
 
     private func buildNavigationStyle() {
+        self.title = "Search News"
+        
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -142,9 +145,29 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
             .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
 
-                self.updateResultSearchNews(to: result)
+                self.updateResultNews(to: result)
+
+                let news = result.compactMap {
+                    return SearchNews(
+                        image: $0.urlToImage,
+                        title: $0.title,
+                        body: $0.description
+                    )
+                }
+
+                self.updateResultSearchNews(to: news)
             })
             .disposed(by: self.disposeBag)
+    }
+
+    private func updateResultNews(to news: [Article]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            if self.resultNews != news {
+                self.resultNews = news
+            }
+        }
     }
 
     private func updateResultSearchNews(to news: [SearchNews]) {
@@ -165,7 +188,7 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
 
 extension HomeSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        dump(indexPath.row, name: "didSelectRowAt")
+        self.viewModel?.didSelectNews(with: self.resultNews[indexPath.row])
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
