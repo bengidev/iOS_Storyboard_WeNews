@@ -13,25 +13,26 @@ class HomeSearchViewModel {
     // MARK: Properties
 
     private(set) var searchBarTextObservable = BehaviorSubject<String>(value: "")
-    private(set) var apiSearchResultObservable = PublishSubject<[SearchNews]>()
+    private(set) var searchNewsObservable = PublishSubject<[SearchNews]>()
     private(set) var didTapBackButtonObservable = PublishSubject<Void>()
 
-    private let apiSource: CurrentsAPISource
+    private let apiSource: NewsAPISource
 
     private let disposeBag = DisposeBag()
 
     // MARK: Lifecycle
 
-    init(apiSource: CurrentsAPISource) {
+    init(apiSource: NewsAPISource) {
         self.apiSource = apiSource
 
+        self.resetViewModelObservables()
         self.buildControllerBindings()
     }
 
     // MARK: Functions
 
     func resetViewModelObservables() {
-        self.apiSearchResultObservable = PublishSubject<[SearchNews]>()
+        self.searchNewsObservable = PublishSubject<[SearchNews]>()
         self.didTapBackButtonObservable = PublishSubject<Void>()
     }
 
@@ -41,35 +42,42 @@ class HomeSearchViewModel {
 
     private func bindSearchTextObservable() {
         self.searchBarTextObservable
-            .skip(while: { $0.isEmpty })
             .distinctUntilChanged()
-            .debounce(.seconds(3), scheduler: MainScheduler.instance)
-            .flatMap { [weak self] text -> Observable<CurrentNews> in
+            .debounce(.seconds(1), scheduler: MainScheduler.instance)
+            .flatMap { [weak self] text -> Observable<News> in
                 guard let self else { return .empty() }
 
-                return self.apiSource.sendGetSearchNews(withKeywords: text)
+                return self.apiSource.sendGetSearchNews(withKeywords: text, forPage: 1)
                     .retry(3)
                     .catchAndReturn(.empty)
             }
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map { currentNews -> [SearchNews] in
-                var tempNews = currentNews.news.map { return SearchNews(image: $0.image, title: $0.title, body: $0.description) }
+                guard let newsArticles = currentNews.articles else { return .init() }
+
+                let convertedNews = newsArticles.filter { $0.urlToImage != nil }.compactMap {
+                    return SearchNews(
+                        image: $0.urlToImage,
+                        title: $0.title,
+                        body: $0.description
+                    )
+                }
+
                 var searchNews: [SearchNews] = []
 
-                forNews: for news in tempNews {
+                forNews: for news in convertedNews {
                     if searchNews.count == 10 { break forNews }
 
                     searchNews.append(news)
                 }
 
-                return searchNews
+                return convertedNews
             }
-            .debug()
             .observe(on: MainScheduler.instance)
             .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
 
-                dump(result.count, name: "bindSearchTextObservable")
+                self.searchNewsObservable.onNext(result)
             })
             .disposed(by: self.disposeBag)
     }

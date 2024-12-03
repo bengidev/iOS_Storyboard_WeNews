@@ -5,6 +5,7 @@
 //  Created by ENB Mac Mini M1 on 21/11/24.
 //
 
+import Kingfisher
 import UIKit
 
 class HomeSearchTableViewCell: UITableViewCell {
@@ -13,6 +14,8 @@ class HomeSearchTableViewCell: UITableViewCell {
     static let identifier = "HomeSearchTableViewCell"
 
     // MARK: Properties
+
+    private let animationTime = 0.3
 
     @IBOutlet private var newsIconImage: UIImageView!
     @IBOutlet private var newsTitleLabel: UILabel!
@@ -32,15 +35,25 @@ class HomeSearchTableViewCell: UITableViewCell {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
 
-            self.changeIconImage(toMatch: news)
-            self.changeTitleLabel(toMatch: news)
-            self.changeBodyLabel(toMatch: news)
+            UIView.animate(withDuration: self.animationTime) {
+                self.changeIconImage(toMatch: news)
+                self.changeTitleLabel(toMatch: news)
+                self.changeBodyLabel(toMatch: news)
+            }
         }
     }
 
     private func changeIconImage(toMatch news: SearchNews) {
-        self.newsIconImage.image = news.image
         self.newsIconImage.roundCorners(.allCorners, radius: 10.0)
+        self.newsIconImage.kf.indicatorType = .activity
+        self.newsIconImage.kf.setImage(
+            with: URL(string: news.image ?? .init()),
+            options: [
+                .cacheMemoryOnly,
+                .transition(.fade(0.3)),
+                .fromMemoryCacheOrRefresh,
+            ]
+        )
     }
 
     private func changeTitleLabel(toMatch news: SearchNews) {

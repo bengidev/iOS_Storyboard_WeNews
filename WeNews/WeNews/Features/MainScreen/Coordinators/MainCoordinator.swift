@@ -15,7 +15,7 @@ class MainCoordinator: BaseCoordinator {
 
     // MARK: Properties
 
-    private let currentsApiSource = CurrentsAPISource.instance
+    private let newsApiSource = NewsAPISource.instance
     private let disposeBag = DisposeBag()
 
     private let viewModel: MainViewModel
@@ -25,7 +25,7 @@ class MainCoordinator: BaseCoordinator {
 
     override private init() {
         self.viewModel = .init()
-        self.homeViewModel = .init(apiSource: self.currentsApiSource)
+        self.homeViewModel = .init(apiSource: self.newsApiSource)
     }
 
     // MARK: Overridden Functions

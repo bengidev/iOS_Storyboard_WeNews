@@ -20,7 +20,7 @@ class HomeCoordinator: BaseCoordinator {
     var viewModel: HomeViewModel?
 
     private let disposeBag = DisposeBag()
-    private let apiSource = CurrentsAPISource.instance
+    private let apiSource = NewsAPISource.instance
 
     // MARK: Lifecycle
 

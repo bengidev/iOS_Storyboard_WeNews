@@ -22,6 +22,9 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     weak var viewModel: HomeSearchViewModel?
 
     private let disposeBag = DisposeBag()
+    private let animationTime = 0.3
+
+    private var resultSearchNews: [SearchNews] = []
 
     @IBOutlet private var searchBar: UISearchBar!
     @IBOutlet private var tableView: UITableView!
@@ -49,6 +52,7 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
 
         self.buildFeatureStyles()
         self.buildControllerBindings()
+        self.buildViewModelBindings()
     }
 
     /// This method is called every time before the view is visible to and before any animation is configured.
@@ -125,11 +129,47 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
             .bind(to: viewModel.searchBarTextObservable)
             .disposed(by: self.disposeBag)
     }
+
+    private func buildViewModelBindings() {
+        self.buildSearchNewsObservable()
+    }
+
+    private func buildSearchNewsObservable() {
+        self.viewModel?.searchNewsObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                self.updateResultSearchNews(to: result)
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func updateResultSearchNews(to news: [SearchNews]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            if self.resultSearchNews != news {
+                self.resultSearchNews = news
+                self.tableView.reloadData()
+
+                dump(self.resultSearchNews.count, name: "updateResultSearchNews")
+            }
+        }
+    }
 }
 
 // MARK: UITableViewDelegate
 
-extension HomeSearchViewController: UITableViewDelegate {}
+extension HomeSearchViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        dump(indexPath.row, name: "didSelectRowAt")
+    }
+
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        dump(indexPath.row, name: "didDeselectRowAt")
+    }
+}
 
 // MARK: UITableViewDataSource
 
@@ -139,7 +179,7 @@ extension HomeSearchViewController: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return self.resultSearchNews.count
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -150,10 +190,12 @@ extension HomeSearchViewController: UITableViewDataSource {
             return .init()
         }
 
-        cell.updateView(withNews: .init(
-            image: "dummyIcon",
-            title: "Apple debuts The Weeknd: Open Hearts, the first-of-its-kind immersive music experience for Apple Vision Pro",
-            body: "Today, Apple released The Weeknd: Open Hearts, a breathtaking immersive music experience from the seven-time diamond-certified artist, available exclusively on Apple Vision Pro for a limited time.")
+        cell.updateView(
+            withNews: .init(
+                image: self.resultSearchNews[indexPath.row].image,
+                title: self.resultSearchNews[indexPath.row].title,
+                body: self.resultSearchNews[indexPath.row].body
+            )
         )
 
         return cell
