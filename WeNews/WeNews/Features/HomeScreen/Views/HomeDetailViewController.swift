@@ -5,7 +5,13 @@
 //  Created by ENB Mac Mini M1 on 03/12/24.
 //
 
+import Kingfisher
+import RxCocoa
+import RxSwift
+import SwiftSoup
 import UIKit
+
+// MARK: - HomeDetailViewController
 
 class HomeDetailViewController: UIViewController, AppStoryboard {
     // MARK: Static Properties
@@ -18,6 +24,18 @@ class HomeDetailViewController: UIViewController, AppStoryboard {
     weak var viewModel: HomeDetailViewModel?
 
     var news: Article?
+
+    @IBOutlet private var newsSourceLabel: UILabel!
+    @IBOutlet private var newsPublishedLabel: UILabel!
+    @IBOutlet private var newsTitleLabel: UILabel!
+    @IBOutlet private var newsImageShellView: UIView!
+    @IBOutlet private var newsImageView: UIImageView!
+    @IBOutlet private var newsDescriptionLabel: UILabel!
+    @IBOutlet private var newsContentLabel: UILabel!
+    @IBOutlet private var visualEffectView: UIVisualEffectView!
+
+    private let disposeBag = DisposeBag()
+    private let animationTime = 0.3
 
     // MARK: Lifecycle
 
@@ -51,6 +69,8 @@ class HomeDetailViewController: UIViewController, AppStoryboard {
         super.viewWillAppear(animated)
 
         self.buildControllerStyles()
+        self.buildRequiredConfigurations()
+        self.buildViewModelBindings()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -99,5 +119,87 @@ class HomeDetailViewController: UIViewController, AppStoryboard {
 
     // MARK: Functions
 
-    private func buildControllerStyles() {}
+    func extractArticleContent(from html: String) -> String? {
+        do {
+            let document = try SwiftSoup.parse(html)
+            // Use appropriate selectors based on the article's structure
+            if let contentElement = try document.select("article").first() {
+                return try contentElement.text()
+            }
+            return nil
+        } catch {
+            print("Error parsing HTML: \(error.localizedDescription)")
+            return nil
+        }
+    }
+
+    private func buildControllerStyles() {
+        self.buildNewsImageStyle()
+    }
+
+    private func buildNewsImageStyle() {
+        self.newsImageView.applyshadowWithCorner(containerView: self.newsImageShellView, cornerRadious: 10.0)
+    }
+
+    private func buildRequiredConfigurations() {
+        self.renewNewsDetail()
+    }
+
+    private func renewNewsDetail() {
+        self.viewModel?.renewContentFromArticle(self.news ?? .empty)
+    }
+
+    private func buildViewModelBindings() {
+        self.bindRenewedArticleObservable()
+    }
+
+    private func bindRenewedArticleObservable() {
+        self.viewModel?.renewedArticleObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                self.updateDetailNews(from: result)
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func updateDetailNews(from value: Article) {
+        self.shouldShowLoadingView(false)
+
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            self.newsSourceLabel.text = value.source?.name
+            self.newsPublishedLabel.text = value.publishedAt?.localeFormatted()
+            self.newsTitleLabel.text = value.title
+            self.changeImageFromURL(self.newsImageView, withURL: value.urlToImage ?? .init())
+            self.newsDescriptionLabel.text = value.description
+            self.newsContentLabel.text = value.content
+        }
+    }
+
+    private func changeImageFromURL(_ view: UIImageView, withURL url: String) {
+        DispatchQueue.main.async {
+            view.kf.indicatorType = .activity
+            view.kf.setImage(
+                with: URL(string: url),
+                options: [
+                    .cacheMemoryOnly,
+                    .transition(.fade(0.3)),
+                    .fromMemoryCacheOrRefresh,
+                ]
+            )
+        }
+    }
+
+    private func shouldShowLoadingView(_ value: Bool = true) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            UIView.animate(withDuration: self.animationTime) {
+                self.visualEffectView.isHidden = !value
+            }
+        }
+    }
 }
