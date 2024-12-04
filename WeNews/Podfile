@@ -3,6 +3,7 @@ def main_pods
   pod 'RxCocoa'
   pod 'DeviceKit'
   pod 'Kingfisher'
+  pod 'SwiftSoup'
 end
 
 def testing_pods
