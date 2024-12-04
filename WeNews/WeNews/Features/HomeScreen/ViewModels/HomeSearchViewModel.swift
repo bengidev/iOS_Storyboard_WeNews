@@ -64,7 +64,6 @@ class HomeSearchViewModel {
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map { currentNews -> [Article] in
                 guard let newsArticles = currentNews.articles else { return .init() }
-
                 return newsArticles.filter { $0.urlToImage != nil }
             }
             .observe(on: MainScheduler.instance)
