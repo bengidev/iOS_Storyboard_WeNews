@@ -99,14 +99,5 @@ class HomeDetailViewController: UIViewController, AppStoryboard {
 
     // MARK: Functions
 
-    private func buildControllerStyles() {
-        self.buildNavigationStyle()
-    }
-    
-    private func buildNavigationStyle() {
-        self.title = (self.news?.source?.name) ?? "Unknown"
-        
-        self.navigationController?.navigationBar.isHidden = false
-        self.navigationController?.navigationBar.prefersLargeTitles = true
-    }
+    private func buildControllerStyles() {}
 }

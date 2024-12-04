@@ -99,7 +99,7 @@
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="U6A-hD-Ra9" secondAttribute="trailing" id="wvq-j8-aan"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Search News" largeTitleDisplayMode="always" id="dk5-lq-Vs2"/>
+                    <navigationItem key="navigationItem" title="Search News" id="dk5-lq-Vs2"/>
                     <connections>
                         <outlet property="searchBar" destination="iQC-ur-VWq" id="pvw-4C-qaa"/>
                         <outlet property="tableView" destination="U6A-hD-Ra9" id="m7o-iA-H3e"/>

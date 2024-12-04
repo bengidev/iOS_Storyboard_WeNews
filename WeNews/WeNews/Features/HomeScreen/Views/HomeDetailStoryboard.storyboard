@@ -9,7 +9,7 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Gizmodo.com-->
+        <!--Home Detail View Controller-->
         <scene sceneID="s0d-6b-0kx">
             <objects>
                 <viewController storyboardIdentifier="HomeDetailViewController" id="Y6W-OH-hqX" customClass="HomeDetailViewController" customModule="WeNews" customModuleProvider="target" sceneMemberID="viewController">
@@ -19,7 +19,7 @@
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Gizmodo.com" id="Lnk-qo-xsn"/>
+                    <navigationItem key="navigationItem" id="Lnk-qo-xsn"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
@@ -30,8 +30,8 @@
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="NxJ-IL-5PM" sceneMemberID="viewController">
                     <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" largeTitles="YES" id="vGT-Xh-SjS">
-                        <rect key="frame" x="0.0" y="59" width="393" height="96"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="vGT-Xh-SjS">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </navigationBar>
                     <nil name="viewControllers"/>

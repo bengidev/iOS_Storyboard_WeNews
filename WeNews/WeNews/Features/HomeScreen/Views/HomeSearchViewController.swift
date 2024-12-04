@@ -50,10 +50,6 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        self.buildControllerStyles()
-        self.buildControllerBindings()
-        self.buildViewModelBindings()
     }
 
     /// This method is called every time before the view is visible to and before any animation is configured.
@@ -64,6 +60,10 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     ///
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+
+        self.buildControllerStyles()
+        self.buildControllerBindings()
+        self.buildViewModelBindings()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -117,8 +117,6 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
     }
 
     private func buildNavigationStyle() {
-        self.title = "Search News"
-        
         self.navigationController?.navigationBar.isHidden = false
         self.navigationController?.navigationBar.prefersLargeTitles = true
     }
@@ -160,6 +158,15 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
             .disposed(by: self.disposeBag)
     }
 
+    private func resetControllerStyles() {
+        self.resetNavigationStyle()
+    }
+
+    private func resetNavigationStyle() {
+        self.navigationController?.navigationBar.isHidden = false
+        self.navigationController?.navigationBar.prefersLargeTitles = false
+    }
+
     private func updateResultNews(to news: [Article]) {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
@@ -188,7 +195,13 @@ class HomeSearchViewController: UIViewController, AppStoryboard {
 
 extension HomeSearchViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        self.viewModel?.didSelectNews(with: self.resultNews[indexPath.row])
+        self.resetControllerStyles()
+
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            guard let self else { return }
+
+            self.viewModel?.didSelectNews(with: self.resultNews[indexPath.row])
+        }
     }
 
     func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
