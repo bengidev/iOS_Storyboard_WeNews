@@ -12,6 +12,7 @@ final class UIChipView: UIView {
     // MARK: Properties
 
     var didSelect: ((String) -> Void)?
+    var chipRadius: Float?
 
     private lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -31,7 +32,7 @@ final class UIChipView: UIView {
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = UIColor.lightGray
-        view.layer.cornerRadius = 5.0
+        view.layer.cornerRadius = CGFloat(self.chipRadius ?? 10.0)
         view.clipsToBounds = true
         return view
     }()
