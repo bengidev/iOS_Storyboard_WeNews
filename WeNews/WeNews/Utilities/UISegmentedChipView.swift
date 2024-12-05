@@ -23,6 +23,7 @@ final class UISegmentedChipView: UIView {
         let view = UIScrollView()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
         view.bounces = false
         view.delaysContentTouches = false
         view.showsHorizontalScrollIndicator = false
@@ -46,10 +47,11 @@ final class UISegmentedChipView: UIView {
         let view = UIStackView()
         view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.backgroundColor = .clear
         view.axis = .horizontal
         view.alignment = .fill
         view.distribution = .fill
-        view.spacing = 12
+        view.spacing = 10.0
         return view
     }()
 
@@ -78,7 +80,7 @@ final class UISegmentedChipView: UIView {
             self.scrollView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             self.scrollView.topAnchor.constraint(equalTo: self.topAnchor),
             self.scrollView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.scrollView.heightAnchor.constraint(equalToConstant: 40.0),
+            self.scrollView.heightAnchor.constraint(equalTo: self.heightAnchor),
         ])
 
         self.scrollView.addSubview(self.containerView)
@@ -92,9 +94,9 @@ final class UISegmentedChipView: UIView {
 
         self.containerView.addSubview(self.filterStackView)
         NSLayoutConstraint.activate([
-            self.filterStackView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 20.0),
+            self.filterStackView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 10.0),
             self.filterStackView.topAnchor.constraint(equalTo: self.containerView.topAnchor),
-            self.filterStackView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -20.0),
+            self.filterStackView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -10.0),
             self.filterStackView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
         ])
     }
@@ -116,6 +118,7 @@ final class UISegmentedChipView: UIView {
 
         for (index, title) in self.chipsTitle.enumerated() {
             let chip = UIChipView()
+
             chip.setup(title: title)
             chip.didSelect = { [weak self] title in
                 guard let self else { return }
@@ -123,6 +126,7 @@ final class UISegmentedChipView: UIView {
                 self.selectChip(at: index)
                 self.delegate?.didTapIndex(index: index, str: title)
             }
+
             self.filterStackView.addArrangedSubview(chip)
             self.chipViews.append(chip)
 
@@ -140,9 +144,11 @@ final class UISegmentedChipView: UIView {
 
     private func selectChip(at index: Int) {
         self.selectedItemIndex = index
+
         for (currentIndex, chip) in self.chipViews.enumerated() {
             chip.isSelected = (currentIndex == index)
         }
+
         self.scrollToSelectedChip()
     }
 

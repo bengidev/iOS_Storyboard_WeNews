@@ -40,9 +40,7 @@ final class UIChipView: UIView {
     // MARK: Computed Properties
 
     var isSelected: Bool = false {
-        didSet {
-            self.updateSelection()
-        }
+        didSet { self.updateSelection() }
     }
 
     // MARK: Lifecycle
