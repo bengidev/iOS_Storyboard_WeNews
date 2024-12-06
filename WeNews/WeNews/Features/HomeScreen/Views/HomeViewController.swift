@@ -24,10 +24,16 @@ class HomeViewController: UIViewController, AppStoryboard {
 
     private let disposeBag = DisposeBag()
 
+    private var selectedCategory: String = .init()
+    private var news: [Article] = []
+
     @IBOutlet private var greetingHeaderLabel: UILabel!
     @IBOutlet private var greetingFooterLabel: UILabel!
     @IBOutlet private var greetingIconImage: UIImageView!
     @IBOutlet private var searchBar: UISearchBar!
+    @IBOutlet private var segmentedChipView: UISegmentedChipView!
+    @IBOutlet private var newsTableView: UITableView!
+    @IBOutlet private var newsTableBlurView: UIVisualEffectView!
 
     // MARK: Lifecycle
 
@@ -62,6 +68,8 @@ class HomeViewController: UIViewController, AppStoryboard {
 
         self.buildFeatureStyles()
         self.buildControllerBindings()
+        self.buildViewModelBindings()
+        self.buildControllerConfigurations()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -109,25 +117,52 @@ class HomeViewController: UIViewController, AppStoryboard {
     // MARK: Functions
 
     private func buildControllerBindings() {
-//        self.button.rx.tap
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(onNext: { [weak self] _ in
-//                guard let self else { return }
-//
-//                self.viewModel.requestSearchNews(withCountry: .asia)
-//            })
-//            .disposed(by: self.disposeBag)
-//
-//        self.viewModel.currentNewsObservable
-//            .skip(while: { $0.status.isEmpty })
-//            .observe(on: MainScheduler.instance)
-//            .subscribe(on: MainScheduler.instance)
-//            .subscribe(onNext: { result in
-//                dump(result, name: "buildControllerBindings")
-//            }, onError: { error in
-//                dump(error.localizedDescription, name: "buildControllerBindings")
-//            })
-//            .disposed(by: self.disposeBag)
+        self.bindDidFinishFetchNewsObservable()
+    }
+
+    private func bindDidFinishFetchNewsObservable() {
+        self.viewModel?.didFinishFetchNewsObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                self.updateNewsTableBlurView(to: result)
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func updateNewsTableBlurView(to value: Bool) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            UIView.animate(withDuration: 0.3, delay: 0.0, options: .transitionCrossDissolve) {
+                self.newsTableBlurView.isHidden = value
+            }
+        }
+    }
+
+    private func buildViewModelBindings() {
+        self.bindNewsObservable()
+    }
+
+    private func bindNewsObservable() {
+        self.viewModel?.newsObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                self.updateNews(to: result)
+            })
+            .disposed(by: self.disposeBag)
+    }
+
+    private func updateNews(to value: [Article]) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            self.news = value
+            self.newsTableView.reloadData()
+        }
     }
 
     private func buildFeatureStyles() {
@@ -166,6 +201,29 @@ class HomeViewController: UIViewController, AppStoryboard {
     private func buildSearchBarStyle() {
         self.searchBar.delegate = self
     }
+
+    private func buildControllerConfigurations() {
+        self.buildSegmentedViewConfiguration()
+        self.sendInitialCategoryRequest()
+    }
+
+    private func buildSegmentedViewConfiguration() {
+        self.segmentedChipView.delegate = self
+        self.segmentedChipView.setup(chipsTitle: [
+            "All Categories",
+            "Business",
+            "Entertainment",
+            "General",
+            "Health",
+            "Science",
+            "Sports",
+            "Technology",
+        ])
+    }
+
+    private func sendInitialCategoryRequest() {
+        self.viewModel?.didTapCategory(to: "general")
+    }
 }
 
 // MARK: UISearchBarDelegate
@@ -175,5 +233,36 @@ extension HomeViewController: UISearchBarDelegate {
         self.viewModel?.didTapSearchBar()
 
         return false
+    }
+}
+
+// MARK: UISegmentedChipViewDelegate
+
+extension HomeViewController: UISegmentedChipViewDelegate {
+    func didTapIndex(index: Int, str: String) {
+        self.viewModel?.didTapCategory(to: str.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))
+    }
+}
+
+// MARK: UITableViewDelegate
+
+extension HomeViewController: UITableViewDelegate {}
+
+// MARK: UITableViewDataSource
+
+extension HomeViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.news.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell = tableView.dequeueReusableCell(withIdentifier: HomeNewsViewCell.id, for: indexPath) as! HomeNewsViewCell
+
+        cell.updateNewsDetail(to: self.news[indexPath.row])
+        return cell
     }
 }
