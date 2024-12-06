@@ -19,65 +19,170 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kF8-Vz-DqZ">
-                                <rect key="frame" x="0.0" y="20" width="320" height="66"/>
+                                <rect key="frame" x="0.0" y="20" width="320" height="548"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="nV2-8w-hPu">
-                                        <rect key="frame" x="0.0" y="0.0" width="6.5" height="66"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="6.5" height="548"/>
                                     </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Hwj-4y-uDy">
-                                        <rect key="frame" x="6.5" y="0.0" width="236.5" height="66"/>
+                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="NO6-ff-3Ea">
+                                        <rect key="frame" x="6.5" y="0.0" width="307" height="548"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Hello, User" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qq6-LB-u70">
-                                                <rect key="frame" x="0.0" y="0.0" width="236.5" height="18"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
-                                                <color key="textColor" systemColor="systemGrayColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="What would you like to read today?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qAu-Lk-Khr">
-                                                <rect key="frame" x="0.0" y="18" width="236.5" height="48"/>
-                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
-                                                <nil key="textColor"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
+                                            <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" translatesAutoresizingMaskIntoConstraints="NO" id="6cb-A7-wXF">
+                                                <rect key="frame" x="0.0" y="0.0" width="307" height="66"/>
+                                                <subviews>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="Hwj-4y-uDy">
+                                                        <rect key="frame" x="0.0" y="0.0" width="236.5" height="66"/>
+                                                        <subviews>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Hello, User" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qq6-LB-u70">
+                                                                <rect key="frame" x="0.0" y="0.0" width="236.5" height="18"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
+                                                                <color key="textColor" systemColor="systemGrayColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" text="What would you like to read today?" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.5" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qAu-Lk-Khr">
+                                                                <rect key="frame" x="0.0" y="18" width="236.5" height="48"/>
+                                                                <fontDescription key="fontDescription" style="UICTFontTextStyleTitle2"/>
+                                                                <nil key="textColor"/>
+                                                                <nil key="highlightedColor"/>
+                                                            </label>
+                                                        </subviews>
+                                                    </stackView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="noN-J7-Yqs">
+                                                        <rect key="frame" x="236.5" y="0.0" width="6.5" height="66"/>
+                                                    </imageView>
+                                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="AvatarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wqQ-zv-F7b">
+                                                        <rect key="frame" x="243" y="0.0" width="64" height="66"/>
+                                                    </imageView>
+                                                </subviews>
+                                            </stackView>
+                                            <searchBar contentMode="redraw" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" searchBarStyle="minimal" placeholder="Search your news" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRI-tE-C9f">
+                                                <rect key="frame" x="0.0" y="66" width="307" height="56"/>
+                                                <textInputTraits key="textInputTraits"/>
+                                                <scopeButtonTitles>
+                                                    <string>Title</string>
+                                                    <string>Title</string>
+                                                </scopeButtonTitles>
+                                                <connections>
+                                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="cay-jP-OuO"/>
+                                                </connections>
+                                            </searchBar>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="TqA-30-hEc">
+                                                <rect key="frame" x="0.0" y="122" width="307" height="10.5"/>
+                                            </imageView>
+                                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="K66-uu-s3V" customClass="UISegmentedChipView" customModule="WeNews" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="132.5" width="307" height="27.5"/>
+                                                <color key="backgroundColor" name="BackgroundColor"/>
+                                            </view>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="3YE-vp-l1h">
+                                                <rect key="frame" x="0.0" y="160" width="307" height="11"/>
+                                            </imageView>
+                                            <tableView clipsSubviews="YES" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" delaysContentTouches="NO" bouncesZoom="NO" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="pfh-6C-Lvt">
+                                                <rect key="frame" x="0.0" y="171" width="307" height="377"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="gray" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HomeNewsViewCell" rowHeight="100" id="d6p-Hl-4YQ" customClass="HomeNewsViewCell" customModule="WeNews" customModuleProvider="target">
+                                                        <rect key="frame" x="0.0" y="50" width="307" height="100"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="d6p-Hl-4YQ" id="a5h-YY-vDq">
+                                                            <rect key="frame" x="0.0" y="0.0" width="307" height="100"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                            <subviews>
+                                                                <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="e5Y-0W-eeE">
+                                                                    <rect key="frame" x="5" y="10" width="297" height="80"/>
+                                                                    <subviews>
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="FavoriteSelectIcon" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-l0-z7U">
+                                                                            <rect key="frame" x="0.0" y="0.0" width="92" height="80"/>
+                                                                        </imageView>
+                                                                        <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="i83-6n-rZa">
+                                                                            <rect key="frame" x="97" y="0.0" width="200" height="80"/>
+                                                                            <subviews>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Associated Press • World" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="XCT-kQ-5bD">
+                                                                                    <rect key="frame" x="0.0" y="0.0" width="200" height="12"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <nil key="textColor"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" text="Last 2 defendants in Atlanta’s Young Thug trial are acquitted of murder" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hEn-Rz-Auh">
+                                                                                    <rect key="frame" x="0.0" y="17" width="200" height="46"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="12"/>
+                                                                                    <nil key="textColor"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2024-12-04" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xxz-Gq-wnF">
+                                                                                    <rect key="frame" x="0.0" y="68" width="200" height="12"/>
+                                                                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="10"/>
+                                                                                    <nil key="textColor"/>
+                                                                                    <nil key="highlightedColor"/>
+                                                                                </label>
+                                                                            </subviews>
+                                                                        </stackView>
+                                                                    </subviews>
+                                                                </stackView>
+                                                            </subviews>
+                                                            <constraints>
+                                                                <constraint firstItem="1cO-l0-z7U" firstAttribute="width" secondItem="a5h-YY-vDq" secondAttribute="width" multiplier="0.3" id="2pY-6h-3VK"/>
+                                                                <constraint firstAttribute="bottom" secondItem="e5Y-0W-eeE" secondAttribute="bottom" constant="10" id="Ad0-bB-K16"/>
+                                                                <constraint firstAttribute="trailing" secondItem="e5Y-0W-eeE" secondAttribute="trailing" constant="5" id="bIn-yN-Q98"/>
+                                                                <constraint firstItem="e5Y-0W-eeE" firstAttribute="leading" secondItem="a5h-YY-vDq" secondAttribute="leading" constant="5" id="dJq-u8-uad"/>
+                                                                <constraint firstItem="e5Y-0W-eeE" firstAttribute="top" secondItem="a5h-YY-vDq" secondAttribute="top" constant="10" id="xZB-L1-w4Z"/>
+                                                            </constraints>
+                                                        </tableViewCellContentView>
+                                                        <connections>
+                                                            <outlet property="newsAuthorlabel" destination="XCT-kQ-5bD" id="rBB-lG-Xf6"/>
+                                                            <outlet property="newsImageView" destination="1cO-l0-z7U" id="Z2d-fg-THH"/>
+                                                            <outlet property="newsPublishedLabel" destination="Xxz-Gq-wnF" id="XxN-Vf-iAr"/>
+                                                            <outlet property="newsTitleLabel" destination="hEn-Rz-Auh" id="q1L-eB-U79"/>
+                                                        </connections>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                                <connections>
+                                                    <outlet property="dataSource" destination="Y6W-OH-hqX" id="foc-NA-fnv"/>
+                                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="mW3-tK-qeJ"/>
+                                                </connections>
+                                            </tableView>
                                         </subviews>
                                     </stackView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="noN-J7-Yqs">
-                                        <rect key="frame" x="243" y="0.0" width="6.5" height="66"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="AvatarIcon" translatesAutoresizingMaskIntoConstraints="NO" id="wqQ-zv-F7b">
-                                        <rect key="frame" x="249.5" y="0.0" width="64" height="66"/>
-                                    </imageView>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="1000" verticalHuggingPriority="1000" horizontalCompressionResistancePriority="250" verticalCompressionResistancePriority="250" translatesAutoresizingMaskIntoConstraints="NO" id="poW-g8-IWs">
-                                        <rect key="frame" x="313.5" y="0.0" width="6.5" height="66"/>
+                                        <rect key="frame" x="313.5" y="0.0" width="6.5" height="548"/>
                                     </imageView>
                                 </subviews>
                             </stackView>
-                            <searchBar contentMode="redraw" searchBarStyle="minimal" placeholder="Search your news" translucent="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRI-tE-C9f">
-                                <rect key="frame" x="0.0" y="94.5" width="320" height="56"/>
-                                <textInputTraits key="textInputTraits"/>
-                                <scopeButtonTitles>
-                                    <string>Title</string>
-                                    <string>Title</string>
-                                </scopeButtonTitles>
-                                <connections>
-                                    <outlet property="delegate" destination="Y6W-OH-hqX" id="cay-jP-OuO"/>
-                                </connections>
-                            </searchBar>
+                            <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="T6y-Ih-o6w">
+                                <rect key="frame" x="6.5" y="191" width="307" height="377"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="pZw-Yu-bBs">
+                                    <rect key="frame" x="0.0" y="0.0" width="307" height="377"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Byv-vT-VJa">
+                                            <rect key="frame" x="143.5" y="178.5" width="20" height="20"/>
+                                        </activityIndicatorView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="Byv-vT-VJa" firstAttribute="centerY" secondItem="pZw-Yu-bBs" secondAttribute="centerY" id="2cO-r2-e82"/>
+                                        <constraint firstItem="Byv-vT-VJa" firstAttribute="centerX" secondItem="pZw-Yu-bBs" secondAttribute="centerX" id="WZ3-kn-kje"/>
+                                    </constraints>
+                                </view>
+                                <blurEffect style="regular"/>
+                            </visualEffectView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="vDu-zF-Fre"/>
                         <color key="backgroundColor" name="BackgroundColor"/>
                         <constraints>
                             <constraint firstItem="kF8-Vz-DqZ" firstAttribute="top" secondItem="vDu-zF-Fre" secondAttribute="top" id="951-0C-aAc"/>
                             <constraint firstItem="kF8-Vz-DqZ" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="C6T-CS-Rum"/>
-                            <constraint firstItem="wqQ-zv-F7b" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.2" id="fS2-QY-6ik"/>
+                            <constraint firstItem="T6y-Ih-o6w" firstAttribute="bottom" secondItem="pfh-6C-Lvt" secondAttribute="bottom" id="KMM-uY-dNm"/>
+                            <constraint firstItem="T6y-Ih-o6w" firstAttribute="trailing" secondItem="pfh-6C-Lvt" secondAttribute="trailing" id="Q82-x3-NPI"/>
+                            <constraint firstItem="K66-uu-s3V" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.05" id="RzF-7P-Iws"/>
+                            <constraint firstItem="TqA-30-hEc" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.02" id="TKK-qI-qXU"/>
+                            <constraint firstItem="3YE-vp-l1h" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.02" id="V0K-ik-qUA"/>
+                            <constraint firstItem="wqQ-zv-F7b" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.2" id="VOz-Za-4HL"/>
+                            <constraint firstItem="Hwj-4y-uDy" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.12" id="WYP-HI-KZ9"/>
+                            <constraint firstItem="T6y-Ih-o6w" firstAttribute="top" secondItem="pfh-6C-Lvt" secondAttribute="top" id="YcC-fu-fGM"/>
+                            <constraint firstItem="noN-J7-Yqs" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.02" id="b6d-Eu-j8D"/>
+                            <constraint firstItem="T6y-Ih-o6w" firstAttribute="leading" secondItem="pfh-6C-Lvt" secondAttribute="leading" id="bsz-Bs-eEp"/>
                             <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="kF8-Vz-DqZ" secondAttribute="trailing" id="gyA-VQ-LKz"/>
                             <constraint firstItem="poW-g8-IWs" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.02" id="i2D-39-HJG"/>
                             <constraint firstItem="nV2-8w-hPu" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.02" id="i2O-gX-EOL"/>
-                            <constraint firstItem="vDu-zF-Fre" firstAttribute="trailing" secondItem="QRI-tE-C9f" secondAttribute="trailing" id="kdv-WM-tII"/>
-                            <constraint firstItem="kF8-Vz-DqZ" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" multiplier="0.12" id="otM-lz-8fN"/>
-                            <constraint firstItem="QRI-tE-C9f" firstAttribute="top" secondItem="kF8-Vz-DqZ" secondAttribute="bottom" multiplier="1.1" id="uFe-Sz-8Rx"/>
-                            <constraint firstItem="QRI-tE-C9f" firstAttribute="leading" secondItem="vDu-zF-Fre" secondAttribute="leading" id="vVt-PY-IZw"/>
-                            <constraint firstItem="noN-J7-Yqs" firstAttribute="width" secondItem="vDu-zF-Fre" secondAttribute="width" multiplier="0.02" id="wy8-TC-n0L"/>
+                            <constraint firstItem="kF8-Vz-DqZ" firstAttribute="height" secondItem="vDu-zF-Fre" secondAttribute="height" id="otM-lz-8fN"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xFb-4G-EBA"/>
@@ -85,7 +190,10 @@
                         <outlet property="greetingFooterLabel" destination="qAu-Lk-Khr" id="Lep-RY-oYq"/>
                         <outlet property="greetingHeaderLabel" destination="qq6-LB-u70" id="LPN-uk-09n"/>
                         <outlet property="greetingIconImage" destination="wqQ-zv-F7b" id="oH1-q1-FGq"/>
+                        <outlet property="newsTableBlurView" destination="T6y-Ih-o6w" id="8gP-RT-YS3"/>
+                        <outlet property="newsTableView" destination="pfh-6C-Lvt" id="NQi-Hv-cjV"/>
                         <outlet property="searchBar" destination="QRI-tE-C9f" id="ESx-YU-XFB"/>
+                        <outlet property="segmentedChipView" destination="K66-uu-s3V" id="aUN-0W-LOm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ief-a0-LHa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -112,6 +220,7 @@
     </scenes>
     <resources>
         <image name="AvatarIcon" width="1920" height="1920"/>
+        <image name="FavoriteSelectIcon" width="28" height="28"/>
         <namedColor name="BackgroundColor">
             <color red="0.96078431372549022" green="0.94117647058823528" blue="0.92549019607843142" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
