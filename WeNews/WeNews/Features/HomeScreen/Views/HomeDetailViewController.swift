@@ -142,11 +142,16 @@ class HomeDetailViewController: UIViewController, AppStoryboard {
     }
 
     private func buildRequiredConfigurations() {
+        self.resetObservablesBeforeBindings()
         self.renewNewsDetail()
     }
 
     private func renewNewsDetail() {
         self.viewModel?.renewContentFromArticle(self.news ?? .empty)
+    }
+    
+    private func resetObservablesBeforeBindings() {
+        self.viewModel?.resetViewModelObservables()
     }
 
     private func buildViewModelBindings() {

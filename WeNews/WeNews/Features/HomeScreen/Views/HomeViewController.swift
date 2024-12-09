@@ -26,6 +26,7 @@ class HomeViewController: UIViewController, AppStoryboard {
 
     private var selectedCategory: String = .init()
     private var news: [Article] = []
+    private var animationTime = 0.3
 
     @IBOutlet private var greetingHeaderLabel: UILabel!
     @IBOutlet private var greetingFooterLabel: UILabel!
@@ -33,7 +34,7 @@ class HomeViewController: UIViewController, AppStoryboard {
     @IBOutlet private var searchBar: UISearchBar!
     @IBOutlet private var segmentedChipView: UISegmentedChipView!
     @IBOutlet private var newsTableView: UITableView!
-    @IBOutlet private var newsTableBlurView: UIVisualEffectView!
+    @IBOutlet private var newsTableVisualEffectView: UIVisualEffectView!
 
     // MARK: Lifecycle
 
@@ -67,9 +68,9 @@ class HomeViewController: UIViewController, AppStoryboard {
         super.viewWillAppear(animated)
 
         self.buildFeatureStyles()
+        self.buildControllerConfigurations()
         self.buildControllerBindings()
         self.buildViewModelBindings()
-        self.buildControllerConfigurations()
     }
 
     /// This method is called after the view present on the screen. Usually, save data to core data or start animation
@@ -123,22 +124,12 @@ class HomeViewController: UIViewController, AppStoryboard {
     private func bindDidFinishFetchNewsObservable() {
         self.viewModel?.didFinishFetchNewsObservable
             .observe(on: MainScheduler.instance)
-            .subscribe(onNext: { [weak self] result in
+            .subscribe(onNext: { [weak self] _ in
                 guard let self else { return }
 
-                self.updateNewsTableBlurView(to: result)
+                self.shouldShowLoadingView(false)
             })
             .disposed(by: self.disposeBag)
-    }
-
-    private func updateNewsTableBlurView(to value: Bool) {
-        DispatchQueue.main.async { [weak self] in
-            guard let self else { return }
-
-            UIView.animate(withDuration: 0.3, delay: 0.0, options: .transitionCrossDissolve) {
-                self.newsTableBlurView.isHidden = value
-            }
-        }
     }
 
     private func buildViewModelBindings() {
@@ -152,6 +143,7 @@ class HomeViewController: UIViewController, AppStoryboard {
                 guard let self else { return }
 
                 self.updateNews(to: result)
+                self.shouldShowLoadingView(false)
             })
             .disposed(by: self.disposeBag)
     }
@@ -160,6 +152,7 @@ class HomeViewController: UIViewController, AppStoryboard {
         DispatchQueue.main.async { [weak self] in
             guard let self else { return }
 
+            dump(value.count, name: "updateNews")
             self.news = value
             self.newsTableView.reloadData()
         }
@@ -203,8 +196,13 @@ class HomeViewController: UIViewController, AppStoryboard {
     }
 
     private func buildControllerConfigurations() {
+        self.finishChildCoordinators()
         self.buildSegmentedViewConfiguration()
         self.sendInitialCategoryRequest()
+    }
+
+    private func finishChildCoordinators() {
+        self.viewModel?.finishChildCoordinators()
     }
 
     private func buildSegmentedViewConfiguration() {
@@ -222,7 +220,18 @@ class HomeViewController: UIViewController, AppStoryboard {
     }
 
     private func sendInitialCategoryRequest() {
+        self.shouldShowLoadingView(true)
         self.viewModel?.didTapCategory(to: "general")
+    }
+
+    private func shouldShowLoadingView(_ value: Bool = true) {
+        DispatchQueue.main.async { [weak self] in
+            guard let self else { return }
+
+            UIView.animate(withDuration: self.animationTime, delay: 0.0, options: .transitionCrossDissolve) {
+                self.newsTableVisualEffectView.isHidden = !value
+            }
+        }
     }
 }
 
@@ -240,13 +249,28 @@ extension HomeViewController: UISearchBarDelegate {
 
 extension HomeViewController: UISegmentedChipViewDelegate {
     func didTapIndex(index: Int, str: String) {
-        self.viewModel?.didTapCategory(to: str.lowercased().trimmingCharacters(in: .whitespacesAndNewlines))
+        self.shouldShowLoadingView(true)
+
+        let selectedCategory = str.lowercased().trimmingCharacters(in: .whitespacesAndNewlines)
+        if selectedCategory == "allcategories" {
+            self.viewModel?.didTapCategory(to: "general")
+        } else {
+            self.viewModel?.didTapCategory(to: selectedCategory)
+        }
     }
 }
 
 // MARK: UITableViewDelegate
 
-extension HomeViewController: UITableViewDelegate {}
+extension HomeViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UIScreen.main.bounds.height * 0.14
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        self.viewModel?.didTapNews(with: self.news[indexPath.row])
+    }
+}
 
 // MARK: UITableViewDataSource
 
