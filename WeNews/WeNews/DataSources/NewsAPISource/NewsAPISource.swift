@@ -38,8 +38,7 @@ class NewsAPISource {
         request.timeoutInterval = 5.0
         request.httpMethod = "GET"
 
-        return URLSession.shared.rx.continueData(request: request as URLRequest)
-            .catchAndReturn(.init())
+        return URLSession.shared.rx.data(request: request as URLRequest)
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map { data -> News in
                 return try newJSONDecoder().decode(News.self, from: data)
@@ -61,7 +60,6 @@ class NewsAPISource {
         request.httpMethod = "GET"
 
         return URLSession.shared.rx.data(request: request as URLRequest)
-            .catchAndReturn(.init())
             .observe(on: ConcurrentDispatchQueueScheduler(qos: .background))
             .map { data -> News in
                 return try newJSONDecoder().decode(News.self, from: data)
