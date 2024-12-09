@@ -89,7 +89,7 @@
                                                                 <stackView opaque="NO" contentMode="scaleToFill" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="e5Y-0W-eeE">
                                                                     <rect key="frame" x="5" y="10" width="297" height="80"/>
                                                                     <subviews>
-                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="FavoriteSelectIcon" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-l0-z7U">
+                                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" image="FavoriteSelectIcon" translatesAutoresizingMaskIntoConstraints="NO" id="1cO-l0-z7U">
                                                                             <rect key="frame" x="0.0" y="0.0" width="92" height="80"/>
                                                                         </imageView>
                                                                         <stackView opaque="NO" contentMode="scaleToFill" horizontalCompressionResistancePriority="1000" verticalCompressionResistancePriority="1000" axis="vertical" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="i83-6n-rZa">
@@ -190,8 +190,8 @@
                         <outlet property="greetingFooterLabel" destination="qAu-Lk-Khr" id="Lep-RY-oYq"/>
                         <outlet property="greetingHeaderLabel" destination="qq6-LB-u70" id="LPN-uk-09n"/>
                         <outlet property="greetingIconImage" destination="wqQ-zv-F7b" id="oH1-q1-FGq"/>
-                        <outlet property="newsTableBlurView" destination="T6y-Ih-o6w" id="8gP-RT-YS3"/>
                         <outlet property="newsTableView" destination="pfh-6C-Lvt" id="NQi-Hv-cjV"/>
+                        <outlet property="newsTableVisualEffectView" destination="T6y-Ih-o6w" id="VTl-OB-b9f"/>
                         <outlet property="searchBar" destination="QRI-tE-C9f" id="ESx-YU-XFB"/>
                         <outlet property="segmentedChipView" destination="K66-uu-s3V" id="aUN-0W-LOm"/>
                     </connections>
