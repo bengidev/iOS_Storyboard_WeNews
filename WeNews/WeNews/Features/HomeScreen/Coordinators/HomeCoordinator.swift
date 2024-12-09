@@ -37,6 +37,8 @@ class HomeCoordinator: BaseCoordinator {
 
     private func buildViewModelBindings() {
         self.bindDidTapSearchBarObservable()
+        self.bindDidTapNewsObservable()
+        self.bindFinishChildCoordinatorsObservable()
     }
 
     private func bindDidTapSearchBarObservable() {
@@ -52,10 +54,47 @@ class HomeCoordinator: BaseCoordinator {
             .disposed(by: self.disposeBag)
     }
 
+    private func bindDidTapNewsObservable() {
+        self.viewModel?.didTapNewsObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: { [weak self] result in
+                guard let self else { return }
+
+                dump(result, name: "bindDidTapNewsObservable")
+                self.navigateToHomeDetailScreen(with: result)
+
+            })
+            .disposed(by: self.disposeBag)
+    }
+
     private func navigateToHomeSearchScreen() {
         let coordinator = HomeSearchCoordinator.intance
         coordinator.navigationController = self.navigationController
 
         self.willStart(coordinator: coordinator)
+    }
+
+    private func navigateToHomeDetailScreen(with value: Article) {
+        self.navigationController.navigationBar.isHidden = false
+        self.navigationController.navigationBar.prefersLargeTitles = false
+
+        DispatchQueue.main.asyncAfter(deadline: .now()) { [weak self] in
+            guard let self else { return }
+
+            let coordinator = HomeDetailCoordinator.intance
+            coordinator.navigationController = self.navigationController
+            coordinator.news = value
+
+            self.willStart(coordinator: coordinator)
+        }
+    }
+
+    private func bindFinishChildCoordinatorsObservable() {
+        self.viewModel?.finishChildCoordinatorsObservable
+            .observe(on: MainScheduler.instance)
+            .subscribe(onNext: {
+                self.removeChildCoordinators()
+            })
+            .disposed(by: self.disposeBag)
     }
 }

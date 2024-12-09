@@ -16,6 +16,8 @@ class HomeViewModel {
     private(set) var didTapSearchBarObservable = PublishSubject<Void>()
     private(set) var newsObservable = PublishSubject<[Article]>()
     private(set) var didFinishFetchNewsObservable = BehaviorSubject<Bool>(value: false)
+    private(set) var didTapNewsObservable = PublishSubject<Article>()
+    private(set) var finishChildCoordinatorsObservable = PublishSubject<Void>()
 
     private let apiSource: NewsAPISource
 
@@ -33,6 +35,8 @@ class HomeViewModel {
         self.didTapSearchBarObservable = PublishSubject<Void>()
         self.newsObservable = PublishSubject<[Article]>()
         self.didFinishFetchNewsObservable = BehaviorSubject<Bool>(value: false)
+        self.didTapNewsObservable = PublishSubject<Article>()
+        self.finishChildCoordinatorsObservable = PublishSubject<Void>()
     }
 
     func didTapSearchBar() {
@@ -52,10 +56,17 @@ class HomeViewModel {
             .subscribe(onNext: { [weak self] result in
                 guard let self else { return }
 
-                dump(result.count, name: "didTapCategory")
                 self.newsObservable.onNext(result)
                 self.didFinishFetchNewsObservable.onNext(true)
             })
             .disposed(by: self.disposeBag)
+    }
+    
+    func didTapNews(with value: Article) {
+        self.didTapNewsObservable.onNext(value)
+    }
+    
+    func finishChildCoordinators() {
+        self.finishChildCoordinatorsObservable.onNext(())
     }
 }
